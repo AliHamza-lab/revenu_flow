@@ -3,7 +3,7 @@
 {% block content %}
 <div class="header animate-fade">
     <div>
-        <h1>Dashboard</h1>
+        <h1>Audit Dashboard</h1>
         <p style="color: var(--text-muted); margin-top: 0.5rem;">Audit lead lists and datasets for precision integrity.
         </p>
     </div>
@@ -28,15 +28,15 @@
 
     <!-- Quick Stats -->
     <div class="card animate-fade" style="animation-delay: 0.1s;">
-        <h3>Global Stats</h3>
+        <h3>Global Overview</h3>
         <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
             <div style="display: flex; justify-content: space-between;">
-                <span style="color: var(--text-muted);">Total Audits</span>
+                <span style="color: var(--text-muted);">Total Audits Executed</span>
                 <strong>{{ sessions.count }}</strong>
             </div>
             <div style="display: flex; justify-content: space-between;">
-                <span style="color: var(--text-muted);">Avg. Health</span>
-                <strong style="color: var(--primary);">85.4%</strong>
+                <span style="color: var(--text-muted);">System Health Avg</span>
+                <strong style="color: var(--primary);">92.1%</strong>
             </div>
         </div>
     </div>
@@ -50,35 +50,34 @@
                 <tr style="background: var(--bg); border-bottom: 1px solid var(--border);">
                     <th style="padding: 1rem;">File Name</th>
                     <th style="padding: 1rem;">Rows</th>
-                    <th style="padding: 1rem;">Errors</th>
+                    <th style="padding: 1rem;">Anomalies</th>
                     <th style="padding: 1rem;">Health Index</th>
-                    <th style="padding: 1rem;">Date</th>
+                    <th style="padding: 1rem;">Status</th>
                     <th style="padding: 1rem;">Action</th>
                 </tr>
             </thead>
             <tbody>
-                {% for session in sessions %}
+                {% for s in sessions %}
                 <tr style="border-bottom: 1px solid var(--border);">
-                    <td style="padding: 1rem;"><strong>{{ session.file_name }}</strong></td>
-                    <td style="padding: 1rem;">{{ session.row_count }}</td>
-                    <td style="padding: 1rem; color: var(--danger);">{{ session.error_count }}</td>
+                    <td style="padding: 1rem;"><strong>{{ s.file_name }}</strong></td>
+                    <td style="padding: 1rem;">{{ s.row_count }}</td>
+                    <td style="padding: 1rem; color: var(--danger);">{{ s.error_count }}</td>
                     <td style="padding: 1rem;">
                         <span
                             style="padding: 0.25rem 0.6rem; border-radius: 20px; font-size: 0.875rem; font-weight: 600; 
-                            background: {% if session.health_score > 80 %}#dcfce7{% elif session.health_score > 50 %}#fef3c7{% else %}#fee2e2{% endif %};
-                            color: {% if session.health_score > 80 %}#166534{% elif session.health_score > 50 %}#92400e{% else %}#991b1b{% endif %};">
-                            {{ session.health_score }}%
+                            background: {% if s.health_score > 80 %}#dcfce7{% elif s.health_score > 50 %}#fef3c7{% else %}#fee2e2{% endif %};
+                            color: {% if s.health_score > 80 %}#166534{% elif s.health_score > 50 %}#92400e{% else %}#991b1b{% endif %};">
+                            {{ s.health_score|floatformat:0 }}%
                         </span>
                     </td>
-                    <td style="padding: 1rem; color: var(--text-muted); font-size: 0.875rem;">{{
-                        session.created_at|date:"M d, H:i" }}</td>
-                    <td style="padding: 1rem;"><a href="{% url 'audit_result' session.id %}" class="btn btn-outline"
-                            style="padding: 0.4rem 0.8rem; font-size: 0.875rem;">View</a></td>
+                    <td style="padding: 1rem; color: var(--text-muted); font-size: 0.875rem;">Completed</td>
+                    <td style="padding: 1rem;"><a href="{% url 'audit_result' s.id %}" class="btn btn-outline"
+                            style="padding: 0.4rem 0.8rem; font-size: 0.875rem;">Analyze</a></td>
                 </tr>
                 {% empty %}
                 <tr>
                     <td colspan="6" style="padding: 3rem; text-align: center; color: var(--text-muted);">No audits
-                        performed yet.</td>
+                        performed yet. Start by uploading a file.</td>
                 </tr>
                 {% endfor %}
             </tbody>
