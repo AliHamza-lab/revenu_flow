@@ -10,7 +10,10 @@ class DataAuditor:
             'email_errors': [],
             'duplicates': 0,
             'anomalies': [],
-            'summary': {}
+            'summary': {},
+            'distributions': {'domains': {}, 'companies': {}},
+            'preview': {'headers': [], 'rows': []},
+            'dimensions': {'validity': 100, 'uniqueness': 100, 'completeness': 100, 'consistency': 100}
         }
 
     def load_data(self):
@@ -81,32 +84,6 @@ class DataAuditor:
             'health_score': round(health_score, 2)
         }
         
-        # Data Quality Dimensions (for UI display)
-        self.report['dimensions'] = {
-            'validity': 100 - (len(self.report['email_errors']) / max(1, row_count) * 100),
-            'uniqueness': 100 - (self.report['duplicates'] / max(1, row_count) * 100),
-            'completeness': 100 - (len(self.report['anomalies']) / max(1, row_count*len(self.df.columns)) * 100),
-            'consistency': 95.0 # Heuristic for now
-        }
-
-        # Value Distributions
-        email_cols = [c for c in self.df.columns if 'email' in c.lower()]
-        if email_cols:
-            email_col = email_cols[0]
-            domains = self.df[email_col].dropna().apply(lambda x: str(x).split('@')[-1] if '@' in str(x) else 'Invalid')
-            self.report['distributions']['domains'] = domains.value_counts().head(5).to_dict()
-
-        company_cols = [c for c in self.df.columns if 'company' in c.lower() or 'org' in c.lower()]
-        if company_cols:
-            company_col = company_cols[0]
-            self.report['distributions']['companies'] = self.df[company_col].value_counts().head(5).to_dict()
-
-        # Data Preview (Samples)
-        self.report['preview'] = {
-            'headers': list(self.df.columns),
-            'rows': self.df.head(5).fillna('').values.tolist()
-        }
-
         return self.report
 
     def get_cleaned_data(self):
