@@ -1,0 +1,88 @@
+{% extends 'engine/base.html' %}
+
+{% block content %}
+<div class="header animate-fade">
+    <div>
+        <a href="{% url 'dashboard' %}"
+            style="text-decoration: none; color: var(--primary); font-weight: 600; font-size: 0.875rem;">← Back to
+            Dashboard</a>
+        <h1 style="margin-top: 1rem;">Audit Results: {{ session.file_name }}</h1>
+    </div>
+    <div style="display: flex; gap: 1rem;">
+        <a href="{% url 'download_cleaned' session.id %}" class="btn btn-primary">Download Cleaned Data</a>
+        <button class="btn btn-outline" onclick="window.print()">Export PDF</button>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; align-items: start;">
+    <!-- Score Card -->
+    <div class="card animate-fade" style="text-align: center; padding: 3rem 2rem;">
+        <h3 style="color: var(--text-muted); margin-bottom: 2rem;">Health Score</h3>
+        <div style="position: relative; width: 160px; height: 160px; margin: 0 auto;">
+            <svg viewBox="0 0 36 36" style="width: 100%; height: 100%; transform: rotate(-90deg);">
+                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none"
+                    stroke="#e2e8f0" stroke-width="3" />
+                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none"
+                    stroke="var(--primary)" stroke-width="3" stroke-dasharray="{{ session.health_score }}, 100" />
+            </svg>
+            <div
+                style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 2rem; font-weight: 800; font-family: 'Outfit';">
+                {{ session.health_score|floatformat:0 }}%
+            </div>
+        </div>
+        <p
+            style="margin-top: 2rem; font-weight: 500; 
+            color: {% if session.health_score > 80 %}var(--success){% elif session.health_score > 50 %}var(--warning){% else %}var(--danger){% endif %};">
+            {% if session.health_score > 80 %}High Integrity Data{% elif session.health_score > 50 %}Moderate Risk{%
+            else %}Critical Cleanup Required{% endif %}
+        </p>
+    </div>
+
+    <!-- Summary Details -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <div class="card animate-fade" style="animation-delay: 0.1s;">
+            <h3>Audit Summary</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem;">
+                <div style="padding: 1rem; background: var(--bg); border-radius: 8px;">
+                    <div style="color: var(--text-muted); font-size: 0.875rem;">Total Rows Processed</div>
+                    <div style="font-size: 1.5rem; font-weight: 700; margin-top: 0.25rem;">{{ session.row_count }}</div>
+                </div>
+                <div style="padding: 1rem; background: var(--bg); border-radius: 8px;">
+                    <div style="color: var(--text-muted); font-size: 0.875rem;">Total Anomalies</div>
+                    <div style="font-size: 1.5rem; font-weight: 700; margin-top: 0.25rem; color: var(--danger);">{{
+                        session.error_count }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card animate-fade" style="animation-delay: 0.2s;">
+            <h3>Technical Breakdown</h3>
+            <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                {% if session.json_report.email_errors %}
+                <div style="border-left: 4px solid var(--danger); padding-left: 1rem;">
+                    <h4 style="margin: 0; font-size: 0.9375rem;">Email Validity Errors</h4>
+                    <p style="margin: 0.25rem 0 0; font-size: 0.875rem; color: var(--text-muted);">{{
+                        session.json_report.email_errors|length }} invalid or disposable emails found.</p>
+                </div>
+                {% endif %}
+
+                {% if session.json_report.duplicates > 0 %}
+                <div style="border-left: 4px solid var(--warning); padding-left: 1rem;">
+                    <h4 style="margin: 0; font-size: 0.9375rem;">Duplicate Records</h4>
+                    <p style="margin: 0.25rem 0 0; font-size: 0.875rem; color: var(--text-muted);">{{
+                        session.json_report.duplicates }} identical rows detected in dataset.</p>
+                </div>
+                {% endif %}
+
+                {% if session.json_report.anomalies %}
+                <div style="border-left: 4px solid var(--primary); padding-left: 1rem;">
+                    <h4 style="margin: 0; font-size: 0.9375rem;">Missing Data / Inconsistencies</h4>
+                    <p style="margin: 0.25rem 0 0; font-size: 0.875rem; color: var(--text-muted);">{{
+                        session.json_report.anomalies|length }} columns have missing or malformed values.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

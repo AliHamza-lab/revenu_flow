@@ -1,0 +1,9 @@
+id,name,email,company,status
+1,John Doe,john.doe@example.com,TechCorp,Active
+2,Jane Smith,jane.smith@tempmail.com,Innovate,Pending
+3,Bob Builder,bob-builder-at-gmail.com,Construct,Active
+4,Alice Wong,,Designify,
+5,John Doe,john.doe@example.com,TechCorp,Active
+6,Charlie Brown,charlie@mailinator.com,Peanuts,Active
+7,Eva Green,eva.green@valid.org,Nature,Pending
+8,Frank White,frank@broken,Sky,,
