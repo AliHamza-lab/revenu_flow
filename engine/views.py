@@ -21,11 +21,17 @@ def run_audit_view(request):
         report = auditor.run_audit()
 
         if report:
+            # Safe extraction with defaults
+            summary = report.get('summary', {})
+            row_count = summary.get('row_count', 0)
+            error_count = summary.get('error_count', 0)
+            health_score = summary.get('health_score', 0)
+
             session = AuditSession.objects.create(
                 file_name=uploaded_file.name,
-                row_count=report['summary']['row_count'],
-                error_count=report['summary']['error_count'],
-                health_score=report['summary']['health_score'],
+                row_count=row_count,
+                error_count=error_count,
+                health_score=health_score,
                 json_report=report
             )
             return redirect('audit_result', session_id=session.id)
