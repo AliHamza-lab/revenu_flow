@@ -70,6 +70,27 @@ def download_cleaned_view(request, session_id):
     response['Content-Disposition'] = f'attachment; filename="cleaned_{session.file_name}"'
     return response
 
+def re_run_audit_view(request, session_id):
+    session = get_object_or_404(AuditSession, id=session_id)
+    fs = FileSystemStorage()
+    file_path = fs.path(session.file_name)
+    
+    if not os.path.exists(file_path):
+        return HttpResponse("Original source file has been purged or is missing.", status=404)
+
+    auditor = DataAuditor(file_path)
+    report = auditor.run_audit()
+
+    if report:
+        summary = report.get('summary', {})
+        session.row_count = summary.get('row_count', 0)
+        session.error_count = summary.get('error_count', 0)
+        session.health_score = summary.get('health_score', 0)
+        session.json_report = report
+        session.save()
+        
+    return redirect('audit_result', session_id=session.id)
+
 def historical_view(request):
     sessions = AuditSession.objects.all().order_by('-created_at')
     return render(request, 'engine/historical.html', {'sessions': sessions})

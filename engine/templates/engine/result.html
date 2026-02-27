@@ -53,6 +53,8 @@
         <h1 style="margin-top: 1rem;">Audit Report: {{ session.file_name }}</h1>
     </div>
     <div style="display: flex; gap: 1rem;">
+        <a href="{% url 're_run_audit' session.id %}" class="btn btn-outline"
+            style="color: var(--primary); border-color: var(--primary);">Re-run Audit ↻</a>
         <a href="{% url 'download_cleaned' session.id %}" class="btn btn-primary">Download Cleaned Data</a>
         <button class="btn btn-outline" onclick="window.print()">Export Report</button>
     </div>
