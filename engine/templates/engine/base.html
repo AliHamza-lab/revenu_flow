@@ -75,6 +75,7 @@
             gap: 12px;
             margin-bottom: 3rem;
             padding: 0 0.5rem;
+            text-decoration: none;
         }
 
         .logo-icon {
@@ -199,6 +200,16 @@
             box-shadow: 0 6px 20px var(--primary-glow);
         }
 
+        .btn-secondary {
+            background: var(--glass);
+            color: #fff;
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--glass-hover);
+        }
+
         /* Animations */
         @keyframes slideUp {
             from {
@@ -212,94 +223,89 @@
             }
         }
 
-        .animate-slide {}
-
-        @media (max-width: 1024px) {
-            aside {
-                width: 80px;
-                padding: 2.5rem 0.75rem;
-            }
-
-            .logo span,
-            .nav-link span,
-            .sidebar-footer {
-                display: none;
-            }
-
-            main {
-                margin-left: 80px;
-                padding: 2rem;
-            }
+        .animate-slide {
+            animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
     </style>
-    {% block extra_head %}{% endblock %}
 </head>
 
 <body>
-    <aside>
-        <a href="{% url 'dashboard' %}" class="logo">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="4" y="4" width="24" height="24" rx="6" fill="url(#logo-grad)" />
-                <path d="M10 16L14 20L22 12" stroke="white" stroke-width="3" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                <defs>
-                    <linearGradient id="logo-grad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#2DD4BF" />
-                        <stop offset="1" stop-color="#A855F7" />
-                    </linearGradient>
-                </defs>
-            </svg>
-            <span>Data<span>Audit</span></span>
+    <aside class="sidebar">
+        <a href="{% url 'home' %}" class="logo-container">
+            <div class="logo-icon">
+                <svg width="24" height="24" fill="white" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                </svg>
+            </div>
+            <span class="logo-text">VORTEX</span>
         </a>
 
-        <nav class="nav-menu">
-            <li>
-                <a href="{% url 'dashboard' %}"
-                    class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                    <span>Overview</span>
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'historical' %}"
-                    class="nav-link {% if request.resolver_match.url_name == 'historical' %}active{% endif %}">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span>Audit History</span>
-                </a>
-            </li>
-            <li style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">
-                <span
-                    style="font-size: 11px; color: var(--text-muted); padding-left: 1.25rem; text-transform: uppercase; letter-spacing: 1px;">Premium
-                    Tools</span>
-            </li>
-            <li>
-                <a href="#" class="nav-link" style="opacity: 0.4; cursor: default;">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
-                    <span>Data Mapper</span>
-                </a>
-            </li>
+        <nav class="nav-section">
+            <div class="nav-label">Discover</div>
+            <a href="{% url 'home' %}"
+                class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                Home
+            </a>
+            <a href="#" class="nav-link">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+                Trending
+            </a>
         </nav>
 
-        <div class="sidebar-footer" style="margin-top: auto; padding-top: 2rem;">
-            <div class="glass-card" style="padding: 1.25rem; border-radius: 16px; background: rgba(255,255,255,0.01);">
-                <p style="font-size: 12px; color: #fff; font-weight: 600; margin-bottom: 4px;">Precision v2.1.0</p>
-                <div style="width: 100%; height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px;">
-                    <div style="width: 85%; height: 100%; background: var(--primary); border-radius: 2px;"></div>
-                </div>
-            </div>
-        </div>
+        <nav class="nav-section">
+            <div class="nav-label">Library</div>
+            <a href="#" class="nav-link">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Recent
+            </a>
+            <a href="#" class="nav-link">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+                Liked
+            </a>
+        </nav>
     </aside>
 
-    <main>
+    <main class="main-content">
+        <header class="top-header">
+            <form action="{% url 'search' %}" method="get" class="search-bar">
+                <svg width="18" height="18" fill="none" stroke="var(--text-muted)" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input type="text" name="q" placeholder="Explore cinematic masterpieces..."
+                    value="{{ query|default:'' }}">
+            </form>
+
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <a href="{% url 'upload_video' %}" class="btn btn-primary">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    Upload
+                </a>
+                <div
+                    style="width: 40px; height: 40px; border-radius: 50%; background: var(--glass); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;">
+                    <svg width="20" height="20" fill="var(--text-muted)" viewBox="0 0 24 24">
+                        <path
+                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                    </svg>
+                </div>
+            </div>
+        </header>
+
         {% block content %}{% endblock %}
     </main>
 </body>
