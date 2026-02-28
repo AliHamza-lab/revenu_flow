@@ -35,7 +35,8 @@
     </div>
 
     <!-- Feature Grid -->
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 80px;">
+    <div
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 32px; margin-top: 80px;">
         <div class="feature-card"
             style="background: var(--surface); border: 1px solid var(--border); border-radius: 32px; padding: 48px; text-align: left; transition: all 0.4s ease;">
             <div
@@ -78,7 +79,182 @@
                 Collaborate on projects and reach a global audience instantly.</p>
         </div>
     </div>
+
+    <!-- Stats Section -->
+    <div
+        style="margin: 120px 0; display: flex; justify-content: space-around; background: rgba(255,255,255,0.02); padding: 80px; border-radius: 40px; border: 1px solid var(--border); flex-wrap: wrap; gap: 40px;">
+        <div style="text-align: center;">
+            <div style="font-size: 3.5rem; font-weight: 800; color: white;">50M+</div>
+            <div style="color: var(--text-muted); letter-spacing: 2px; font-weight: 600; font-size: 0.8rem;">ACTIVE
+                VIEWERS</div>
+        </div>
+        <div style="text-align: center;">
+            <div style="font-size: 3.5rem; font-weight: 800; color: white;">120K+</div>
+            <div style="color: var(--text-muted); letter-spacing: 2px; font-weight: 600; font-size: 0.8rem;">PRO
+                CREATORS</div>
+        </div>
+        <div style="text-align: center;">
+            <div style="font-size: 3.5rem; font-weight: 800; color: white;">1.2PB</div>
+            <div style="color: var(--text-muted); letter-spacing: 2px; font-weight: 600; font-size: 0.8rem;">DATA
+                STREAMED</div>
+        </div>
+    </div>
+
+    <!-- Edge Network Section -->
+    <div
+        style="text-align: left; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 80px; align-items: center; margin: 120px 0;">
+        <div>
+            <h2 style="font-size: 3rem; font-weight: 800; margin-bottom: 24px; font-family: 'Outfit';">Global Precision
+                Edge Network</h2>
+            <p style="font-size: 1.2rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 32px;">
+                We don't just stream; we deliver. Our nodes are strategically placed in over 140 countries to ensure
+                buffer-free playback even at the highest bitrates.
+            </p>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 16px;">
+                <li style="display: flex; align-items: center; gap: 12px; color: white; font-weight: 600;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary)">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                    </svg>
+                    Sub-100ms Worldwide Latency
+                </li>
+                <li style="display: flex; align-items: center; gap: 12px; color: white; font-weight: 600;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary)">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                    </svg>
+                    Multi-CDN Load Balancing
+                </li>
+                <li style="display: flex; align-items: center; gap: 12px; color: white; font-weight: 600;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary)">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                    </svg>
+                    Dynamic Resolution Adaptive Streaming
+                </li>
+            </ul>
+        </div>
+        <div
+            style="position: relative; border-radius: 32px; overflow: hidden; aspect-ratio: 4/3; background: #111; border: 1px solid var(--border);">
+            <div
+                style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(255,0,0,0.2) 0%, transparent 70%);">
+            </div>
+            <div
+                style="padding: 40px; display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(8, 1fr); gap: 10px; height: 100%;">
+                {% for i in "1234567890123456789012345678901234567890" %}
+                <div
+                    style="width: 8px; height: 8px; background: rgba(255,255,255,0.1); border-radius: 50%; animation: pulse {{ forloop.counter|add:2 }}s infinite;">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Pricing / Membership -->
+    <div style="margin: 120px 0; text-align: center;">
+        <h2 style="font-size: 3rem; font-weight: 800; margin-bottom: 16px; font-family: 'Outfit';">Join the Elite</h2>
+        <p style="color: var(--text-muted); font-size: 1.2rem; margin-bottom: 60px;">Select a plan that matches your
+            vision.</p>
+
+        <div
+            style="display: flex; flex-wrap: wrap; justify-content: center; gap: 32px; max-width: 1200px; margin: 0 auto; padding-bottom: 100px;">
+            <div class="pricing-card"
+                style="flex: 1; min-width: 300px; max-width: 400px; background: var(--surface); border: 1px solid var(--border); border-radius: 32px; padding: 48px; display: flex; flex-direction: column; text-align: left;">
+                <h3 style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 700;">PRODUCER
+                </h3>
+                <div style="font-size: 3.5rem; font-weight: 800; margin-bottom: 24px;">$0<span
+                        style="font-size: 1rem; color: var(--text-muted);">/mo</span></div>
+                <ul
+                    style="list-style: none; flex: 1; display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px;">
+                    <li style="color: var(--text-muted);"><svg width="18" height="18" viewBox="0 0 24 24"
+                            fill="var(--primary)" style="margin-right: 8px;">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                        </svg>4K Streaming</li>
+                    <li style="color: var(--text-muted);"><svg width="18" height="18" viewBox="0 0 24 24"
+                            fill="var(--primary)" style="margin-right: 8px;">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                        </svg>10GB Storage</li>
+                </ul>
+                <a href="{% url 'signup' %}" class="btn-elite"
+                    style="width: 100%; padding: 16px; justify-content: center;">Start Free</a>
+            </div>
+
+            <div class="pricing-card"
+                style="flex: 1; min-width: 300px; max-width: 400px; background: var(--surface); border: 2px solid var(--primary); border-radius: 32px; padding: 48px; display: flex; flex-direction: column; text-align: left; position: relative;">
+                <div
+                    style="position: absolute; top: -16px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 4px 16px; border-radius: 20px; font-weight: 700; font-size: 0.8rem;">
+                    MOST POPULAR</div>
+                <h3 style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 700;">DIRECTOR
+                </h3>
+                <div style="font-size: 3.5rem; font-weight: 800; margin-bottom: 24px;">$29<span
+                        style="font-size: 1rem; color: var(--text-muted);">/mo</span></div>
+                <ul
+                    style="list-style: none; flex: 1; display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px;">
+                    <li style="color: white;"><svg width="18" height="18" viewBox="0 0 24 24" fill="var(--primary)"
+                            style="margin-right: 8px;">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                        </svg>8K Unlimited</li>
+                    <li style="color: white;"><svg width="18" height="18" viewBox="0 0 24 24" fill="var(--primary)"
+                            style="margin-right: 8px;">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                        </svg>Cloud Studio Access</li>
+                </ul>
+                <a href="{% url 'signup' %}" class="btn-elite btn-primary"
+                    style="width: 100%; padding: 16px; justify-content: center; border: none;">Get Started</a>
+            </div>
+        </div>
+    </div>
 </div>
+
+<footer style="background: #050505; border-top: 1px solid var(--border); padding: 80px 40px 40px;">
+    <div
+        style="max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 60px;">
+        <div>
+            <a href="{% url 'home' %}" class="logo-container" style="margin-bottom: 24px;">
+                <div class="logo-icon">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M10 15.065V8.935L15 12L10 15.065ZM12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" />
+                    </svg>
+                </div>
+                <span>Vortex Stream</span>
+            </a>
+            <p style="color: var(--text-muted); line-height: 1.6; font-size: 0.9rem;">The premier destination for
+                high-fidelity cinematic storytelling. Empowering creators since 2026.</p>
+        </div>
+        <div>
+            <h4 style="color: white; margin-bottom: 20px; font-weight: 700; font-size: 0.9rem; letter-spacing: 1px;">
+                PLATFORM</h4>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px;">
+                <li><a href="#" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Watch
+                        Vision</a></li>
+                <li><a href="#" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Creator
+                        Studio</a></li>
+                <li><a href="#" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Edge
+                        Network</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: white; margin-bottom: 20px; font-weight: 700; font-size: 0.9rem; letter-spacing: 1px;">
+                LEGAL</h4>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px;">
+                <li><a href="#" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Privacy
+                        Policy</a></li>
+                <li><a href="#" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Terms of
+                        Service</a></li>
+            </ul>
+        </div>
+    </div>
+    <div
+        style="max-width: 1400px; margin: 60px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); text-align: center;">
+        <p style="color: var(--text-muted); font-size: 0.8rem;">&copy; 2026 Vortex Stream Ecosystem. All rights
+            reserved.</p>
+    </div>
+</footer>
 
 <script>
     const textElement = document.getElementById('typewriter');

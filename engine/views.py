@@ -5,9 +5,12 @@ from django.contrib.auth.decorators import login_required
 from .models import Video, Category
 from django.db.models import Q
 
+from django.contrib import messages
+
 def home(request):
     if not request.user.is_authenticated:
-        return render(request, 'engine/landing.html')
+        categories = Category.objects.all()
+        return render(request, 'engine/landing.html', {'categories': categories})
         
     videos = Video.objects.all().order_by('-created_at')
     categories = Category.objects.all()
@@ -26,20 +29,28 @@ def login_view(request):
         if user:
             login(request, user)
             return redirect('home')
+        else:
+            messages.error(request, "Invalid username or password.")
     return render(request, 'engine/login.html')
 
 def signup_view(request):
     if request.method == 'POST':
         u = request.POST.get('username')
         p = request.POST.get('password')
-        if not User.objects.filter(username=u).exists():
+        if not u or not p:
+            messages.error(request, "Username and password are required.")
+        elif User.objects.filter(username=u).exists():
+            messages.error(request, "This username is already taken.")
+        else:
             user = User.objects.create_user(username=u, password=p)
             login(request, user)
+            messages.success(request, f"Welcome to Vortex, {u}!")
             return redirect('home')
     return render(request, 'engine/signup.html')
 
 def logout_view(request):
     logout(request)
+    messages.success(request, "Successfully logged out.")
     return redirect('home')
 
 def watch(request, video_id):

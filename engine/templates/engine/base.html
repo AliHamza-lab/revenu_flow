@@ -287,6 +287,38 @@
             box-shadow: 0 0 15px var(--primary-glow);
         }
 
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            --sidebar-width: 80px;
+
+            .nav-link span,
+            .nav-label,
+            .logo-container span {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: var(--sidebar-width);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                width: 0;
+                padding: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 16px;
+            }
+
+            .search-area {
+                display: none;
+            }
+        }
+
         /* Animations */
         @keyframes fadeInUp {
             from {
@@ -304,37 +336,27 @@
             animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
-        /* Typewriter Animation Utility */
-        .typewriter {
-            overflow: hidden;
-            border-right: .15em solid var(--primary);
-            white-space: nowrap;
-            margin: 0 auto;
-            letter-spacing: .15em;
-            animation:
-                typing 3.5s steps(40, end),
-                blink-caret .75s step-end infinite;
-        }
-
-        @keyframes typing {
+        @keyframes messageIn {
             from {
-                width: 0
+                transform: translateX(100%);
+                opacity: 0;
             }
 
             to {
-                width: 100%
+                transform: translateX(0);
+                opacity: 1;
             }
         }
 
-        @keyframes blink-caret {
-
-            from,
-            to {
-                border-color: transparent
+        @keyframes messageOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
             }
 
-            50% {
-                border-color: var(--primary);
+            to {
+                transform: translateX(100%);
+                opacity: 0;
             }
         }
     </style>
@@ -342,10 +364,41 @@
 </head>
 
 <body>
+    {% if messages %}
+    <div id="message-container"
+        style="position: fixed; top: 90px; right: 20px; z-index: 3000; display: flex; flex-direction: column; gap: 12px;">
+        {% for message in messages %}
+        <div class="message-item"
+            style="padding: 16px 24px; border-radius: 12px; background: rgba(20, 20, 20, 0.95); backdrop-filter: blur(10px); border: 1px solid var(--border); border-left: 4px solid {% if message.tags == 'error' %}#FF0000{% else %}#00BFA5{% endif %}; color: white; min-width: 280px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); animation: messageIn 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards; display: flex; align-items: center; gap: 12px;">
+            {% if message.tags == 'error' %}
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#FF0000">
+                <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+            </svg>
+            {% else %}
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#00BFA5">
+                <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+            </svg>
+            {% endif %}
+            <span style="font-weight: 500;">{{ message }}</span>
+        </div>
+        {% endfor %}
+    </div>
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll('.message-item').forEach(el => {
+                el.style.animation = 'messageOut 0.5s ease-in forwards';
+                setTimeout(() => el.remove(), 500);
+            });
+        }, 5000);
+    </script>
+    {% endif %}
     <header class="top-header">
         <div class="header-left">
-            <button style="background:none; border:none; padding:8px; cursor:pointer; border-radius:50%;">
-                <svg width="24" height="24" viewBox="0 0 24 24">
+            <button id="sidebar-toggle"
+                style="background:none; border:none; padding:8px; cursor:pointer; border-radius:50%; color: white;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
                 </svg>
             </button>
@@ -398,18 +451,18 @@
         </div>
     </header>
 
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
         <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
             <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z" />
             </svg>
-            Home
+            <span>Home</span>
         </a>
         <a href="#" class="nav-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
             </svg>
-            Trending
+            <span>Trending</span>
         </a>
         <div class="divider"></div>
         <div class="nav-label">You</div>
@@ -417,14 +470,14 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            History
+            <span>History</span>
         </a>
         <a href="#" class="nav-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path
                     d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
-            Liked
+            <span>Liked</span>
         </a>
         {% if user.is_authenticated %}
         <div class="divider"></div>
@@ -434,14 +487,14 @@
                 <path
                     d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.47 4.74-3.02 8.75-7 9.99V12H5V6.39l7-3.11v8.71z" />
             </svg>
-            Control Center
+            <span>Control Center</span>
         </a>
         {% endif %}
         <a href="{% url 'logout' %}" class="nav-link" style="color: #CC0000;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             </svg>
-            Sign out
+            <span>Sign out</span>
         </a>
         {% endif %}
     </aside>
@@ -449,6 +502,26 @@
     <main class="main-content">
         {% block content %}{% endblock %}
     </main>
+
+    <script>
+        document.getElementById('sidebar-toggle')?.addEventListener('click', () => {
+            const sidebar = document.getElementById('sidebar');
+            const isOpen = sidebar.classList.contains('sidebar-open');
+
+            if (isOpen) {
+                sidebar.classList.remove('sidebar-open');
+                sidebar.style.transform = 'translateX(-100%)';
+                sidebar.style.width = '0';
+                sidebar.style.padding = '0';
+            } else {
+                sidebar.classList.add('sidebar-open');
+                sidebar.style.transform = 'translateX(0%)';
+                sidebar.style.width = '240px';
+                sidebar.style.padding = '12px';
+                sidebar.style.zIndex = '2500';
+            }
+        });
+    </script>
 </body>
 
 </html>
