@@ -1,0 +1,45 @@
+{% extends 'engine/base.html' %}
+
+{% block content %}
+<div class="animate-slide">
+    <header class="page-header">
+        <div class="page-title">
+            <h1>Search Ecosystem</h1>
+            <p>Intelligence found for: <span style="color: #fff; font-weight: 700;">"{{ query }}"</span></p>
+        </div>
+    </header>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">
+        {% for video in videos %}
+        <article class="glass-card"
+            style="padding: 0; overflow: hidden; position: relative; cursor: pointer; border-radius: 16px;"
+            onclick="window.location='{% url 'watch' video.id %}'">
+            <div style="aspect-ratio: 16/9; background: #000; overflow: hidden; position: relative;">
+                {% if video.thumbnail %}
+                <img src="{{ video.thumbnail.url }}" alt="{{ video.title }}"
+                    style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s;">
+                {% else %}
+                <div
+                    style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(45deg, #1f1f1f, #000);">
+                    <svg width="40" height="40" fill="var(--border)" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                </div>
+                {% endif %}
+            </div>
+            <div style="padding: 1.25rem;">
+                <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem; line-height: 1.4; color: #fff;">{{
+                    video.title }}</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">{{ video.views }} views • Verified</p>
+            </div>
+        </article>
+        {% empty %}
+        <div style="grid-column: 1/-1; text-align: center; padding: 5rem 0;">
+            <p style="color: var(--text-muted); font-size: 1.2rem;">No cosmic intelligence matches your query.</p>
+            <a href="{% url 'home' %}" class="btn"
+                style="color: var(--primary); margin-top: 1rem; font-weight: 700;">Return to Universe Dashboard</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

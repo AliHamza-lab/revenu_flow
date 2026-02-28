@@ -1,12 +1,21 @@
 from django.db import models
 
-class AuditSession(models.Model):
-    file_name = models.CharField(max_length=255)
-    row_count = models.IntegerField(default=0)
-    error_count = models.IntegerField(default=0)
-    health_score = models.FloatField(default=0.0)
-    json_report = models.JSONField(default=dict)
-    created_at = models.DateTimeField(auto_now_add=True)
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True)
 
     def __str__(self):
-        return f"{self.file_name} - {self.created_at.strftime('%Y-%m-%d %H:%M')}"
+        return self.name
+
+class Video(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    video_file = models.FileField(upload_to='videos/')
+    thumbnail = models.ImageField(upload_to='thumbnails/', blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='videos')
+    views = models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    duration = models.CharField(max_length=10, blank=True) # e.g. "12:34"
+
+    def __str__(self):
+        return self.title
