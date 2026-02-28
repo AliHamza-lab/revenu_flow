@@ -1,51 +1,49 @@
 {% extends 'engine/base.html' %}
 
 {% block content %}
-<div class="animate-slide"
+<div class="elite-fade-in"
     style="min-height: 80vh; display: flex; align-items: center; justify-content: center; padding: 2.5rem;">
-    <div class="glass-card" style="width: 100%; max-width: 520px; padding: 3rem; text-align: center;">
-        <h2 style="font-size: 2.5rem; font-family: 'Outfit'; font-weight: 800; margin-bottom: 0.75rem;">Join the Vision
-        </h2>
-        <p style="color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1.1rem;">Witness the next generation of
-            masters.</p>
+    <div
+        style="width: 100%; max-width: 480px; padding: 56px; text-align: center; border: 1px solid var(--border); border-radius: 12px; background: #fff;">
+        <div
+            style="margin-bottom: 32px; display: flex; align-items: center; justify-content: center; gap: 12px; color: var(--primary);">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                    d="M10 15.065V8.935L15 12L10 15.065ZM12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" />
+            </svg>
+            <h2 style="font-size: 1.75rem; font-family: 'Outfit'; font-weight: 800; color: #0F0F0F;">Create Account</h2>
+        </div>
+        <p style="color: #606060; margin-bottom: 40px; font-size: 1.1rem; line-height: 1.5;">Join thousands of elite
+            creators in the Vortex ecosystem.</p>
 
         <form method="post" action="{% url 'signup' %}"
-            style="display: flex; flex-direction: column; gap: 1.5rem; text-align: left;">
+            style="display: flex; flex-direction: column; gap: 20px; text-align: left;">
             {% csrf_token %}
 
-            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                <label
-                    style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 1.5px;">Identity</label>
-                <input type="text" name="username" placeholder="Username"
-                    style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; color: #fff; outline: none; transition: all 0.3s;"
-                    onfocus="this.style.borderColor='var(--primary)'; this.style.boxShadow='0 0 15px var(--primary-glow)';"
-                    onblur="this.style.borderColor='var(--border)'; this.style.boxShadow='none';" required>
-            </div>
+            <input type="text" name="username" placeholder="Choose Username"
+                style="border: 1px solid var(--border); border-radius: 6px; padding: 16px; font-size: 1.1rem; outline: none; transition: border-color 0.2s;"
+                onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';"
+                required>
 
-            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                <label
-                    style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 1.5px;">Credential</label>
-                <input type="password" name="password" placeholder="Secure Passcode"
-                    style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; color: #fff; outline: none; transition: all 0.3s;"
-                    onfocus="this.style.borderColor='var(--primary)'; this.style.boxShadow='0 0 15px var(--primary-glow)';"
-                    onblur="this.style.borderColor='var(--border)'; this.style.boxShadow='none';" required>
-            </div>
+            <input type="password" name="password" placeholder="Secure Password"
+                style="border: 1px solid var(--border); border-radius: 6px; padding: 16px; font-size: 1.1rem; outline: none; transition: border-color 0.2s;"
+                onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';"
+                required>
 
-            <button type="submit" class="btn btn-primary"
-                style="margin-top: 1.5rem; padding: 1.25rem 2rem; font-size: 1.15rem; border-radius: 16px; font-weight: 800;">Initiate
-                Membership</button>
+            <button type="submit" class="btn-elite"
+                style="background: #0F0F0F; color: #fff; padding: 14px; border: none; font-size: 16px; font-weight: 700; display: block; border-radius: 6px; width: 100%; display: flex; justify-content: center; cursor: pointer;">Join
+                Now</button>
         </form>
 
-        <p style="margin-top: 2rem; font-size: 0.9rem; color: var(--text-muted);">
-            Existing witness? <a href="{% url 'login' %}"
-                style="color: var(--primary); font-weight: 700; text-decoration: none;">Access Profile</a>
+        <p style="margin-top: 40px; font-size: 14px; color: #606060;">
+            Already have an identity? <a href="{% url 'login' %}"
+                style="color: #065FD4; font-weight: 700; text-decoration: none;">Sign in instead</a>
         </p>
     </div>
 </div>
 <style>
     .main-content {
         margin-left: 0 !important;
-        padding: 0 !important;
     }
 
     .sidebar {

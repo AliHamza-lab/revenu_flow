@@ -29,10 +29,9 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-fallback-key-change-this')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '44.195.33.227,localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '44.195.33.227,ec2-44-195-33-227.compute-1.amazonaws.com,localhost,127.0.0.1').split(',')
 
-
-# Application definition
+CSRF_TRUSTED_ORIGINS = ['http://44.195.33.227', 'https://44.195.33.227']
 
 INSTALLED_APPS = [
     'django.contrib.admin',

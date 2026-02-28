@@ -1,90 +1,71 @@
 {% extends 'engine/base.html' %}
 
 {% block content %}
-<div class="animate-slide" style="max-width: 800px; margin: 0 auto; padding-bottom: 5rem;">
-    <header class="page-header">
-        <div class="page-title">
-            <h1>Release Strategy</h1>
-            <p>Upload your video or cinematic release to the Vortex Stream network.</p>
-        </div>
-    </header>
-
-    <div class="glass-card" style="padding: 3rem;">
-        <form action="{% url 'upload_video' %}" method="post" enctype="multipart/form-data"
-            style="display: flex; flex-direction: column; gap: 2.5rem;">
-            {% csrf_token %}
-
-            <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
-                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                    <label
-                        style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 1px;">Release
-                        Title</label>
-                    <input type="text" name="title" placeholder="Epic Title"
-                        style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; color: #fff; font-size: 1.1rem; outline: none; transition: border-color 0.3s;"
-                        onfocus="this.style.borderColor='var(--primary)'"
-                        onblur="this.style.borderColor='var(--border)'" required>
-                </div>
-
-                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                    <label
-                        style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 1px;">Description</label>
-                    <textarea name="description" placeholder="The narrative behind this creation..." rows="4"
-                        style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; color: #fff; outline: none; resize: none; transition: border-color 0.3s;"
-                        onfocus="this.style.borderColor='var(--primary)'"
-                        onblur="this.style.borderColor='var(--border)'"></textarea>
-                </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                <!-- Video File Zone -->
-                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                    <label
-                        style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 1px;">Video
-                        Master</label>
-                    <div
-                        style="border: 2px dashed var(--border); border-radius: 16px; padding: 2.5rem; text-align: center; position: relative; background: rgba(255,255,255,0.01);">
-                        <svg width="40" height="40" fill="none" stroke="var(--primary)" viewBox="0 0 24 24"
-                            style="margin-bottom: 1rem;">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                        </svg>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">Drag & Drop Video
-                            Master</p>
-                        <input type="file" name="video_file" id="video_file" style="display: none;" required
-                            onchange="document.getElementById('video_label').innerText = this.files[0].name;">
-                        <label for="video_file" id="video_label" class="btn btn-secondary"
-                            style="border-radius: 20px; font-size: 0.85rem; cursor: pointer;">Choose File</label>
-                    </div>
-                </div>
-
-                <!-- Thumbnail Zone -->
-                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                    <label
-                        style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 1px;">Cover
-                        Art</label>
-                    <div
-                        style="border: 2px dashed var(--border); border-radius: 16px; padding: 2.5rem; text-align: center; position: relative; background: rgba(255,255,255,0.01);">
-                        <svg width="40" height="40" fill="none" stroke="var(--secondary)" viewBox="0 0 24 24"
-                            style="margin-bottom: 1rem;">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">Upload
-                            Portrait/Art</p>
-                        <input type="file" name="thumbnail" id="thumbnail" style="display: none;"
-                            onchange="document.getElementById('thumb_label').innerText = this.files[0].name;">
-                        <label for="thumbnail" id="thumb_label" class="btn btn-secondary"
-                            style="border-radius: 20px; font-size: 0.85rem; cursor: pointer;">Choose Art</label>
-                    </div>
-                </div>
-            </div>
-
-            <div style="padding-top: 1rem; display: flex; justify-content: flex-end;">
-                <button type="submit" class="btn btn-primary"
-                    style="padding: 1rem 3rem; font-size: 1.1rem; border-radius: 16px; font-weight: 800;">Initiate
-                    Release</button>
-            </div>
-        </form>
+<div class="elite-fade-in" style="max-width: 960px; margin: 0 auto; padding: 40px 20px;">
+    <div
+        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 24px;">
+        <h1 style="font-size: 1.75rem; font-family: 'Outfit'; font-weight: 800;">Creator Studio</h1>
+        <button type="submit" form="upload-form" class="btn-elite"
+            style="background: #065FD4; color: #fff; border: none; padding: 10px 24px; border-radius: 4px; font-weight: 600;">Publish
+            Vision</button>
     </div>
+
+    <form id="upload-form" method="post" enctype="multipart/form-data"
+        style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px;">
+        {% csrf_token %}
+
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <label style="font-size: 14px; font-weight: 600; color: #0F0F0F;">Title (Required)</label>
+                <input type="text" name="title" placeholder="Add a title that describes your masterpiece"
+                    style="border: 1px solid var(--border); border-radius: 4px; padding: 12px; font-size: 15px; outline: none; width: 100%; transition: border-color 0.2s;"
+                    onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';"
+                    required>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <label style="font-size: 14px; font-weight: 600; color: #0F0F0F;">Description</label>
+                <textarea name="description" placeholder="Tell viewers about your cinematic journey" rows="8"
+                    style="border: 1px solid var(--border); border-radius: 4px; padding: 12px; font-size: 15px; outline: none; width: 100%; resize: vertical; transition: border-color 0.2s;"
+                    onfocus="this.style.borderColor='var(--accent)';"
+                    onblur="this.style.borderColor='var(--border)';"></textarea>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <label style="font-size: 14px; font-weight: 600; color: #0F0F0F;">Category</label>
+                <select name="category"
+                    style="border: 1px solid var(--border); border-radius: 4px; padding: 12px; font-size: 15px; outline: none; background: #fff; cursor: pointer;">
+                    {% for cat in categories %}
+                    <option value="{{ cat.id }}">{{ cat.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div style="background: var(--surface); border: 2px dashed var(--border); border-radius: 12px; padding: 40px; text-align: center; cursor: pointer; transition: all 0.2s;"
+                onmouseover="this.style.borderColor='var(--accent)'; this.style.background='#F0F7FF';"
+                onmouseout="this.style.borderColor='var(--border)'; this.style.background='var(--surface)';">
+                <input type="file" name="video_file" id="video_file" style="display: none;" accept="video/*" required>
+                <label for="video_file" style="cursor: pointer;">
+                    <svg width="48" height="48" fill="none" stroke="#606060" viewBox="0 0 24 24"
+                        style="margin-bottom: 16px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    <p style="font-weight: 600; margin-bottom: 4px; color: #0F0F0F;">Select Video File</p>
+                    <p style="font-size: 12px; color: #606060;">Drag and drop video files to upload</p>
+                </label>
+            </div>
+
+            <div style="border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+                <label
+                    style="font-size: 13px; font-weight: 600; color: #606060; margin-bottom: 12px; display: block;">Thumbnail</label>
+                <input type="file" name="thumbnail" accept="image/*" style="font-size: 13px; color: #606060;">
+                <p style="font-size: 11px; color: #606060; margin-top: 8px;">Select or upload a picture that shows
+                    what's in your video.</p>
+            </div>
+        </div>
+    </form>
 </div>
 {% endblock %}

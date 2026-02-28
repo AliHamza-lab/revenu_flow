@@ -1,43 +1,60 @@
 {% extends 'engine/base.html' %}
 
 {% block content %}
-<div class="animate-slide"
-    style="min-height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center; padding-top: 100px;">
-    <div style="max-width: 900px;">
-        <h1
-            style="font-size: 5rem; font-family: 'Outfit'; font-weight: 900; line-height: 1; margin-bottom: 2rem; background: linear-gradient(135deg, #fff 0%, #6366f1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-            Witness Future<br>of Cinematic Stream
-        </h1>
-        <p
-            style="font-size: 1.25rem; color: var(--text-muted); margin-bottom: 3rem; line-height: 1.8; max-width: 700px; margin-left: auto; margin-right: auto;">
-            Experience ultra-premium video streaming with Glassmorphism aesthetics. Join the community of elite creators
-            and witness masterpieces in high definition.
-        </p>
+<div class="elite-fade-in" style="max-width: 1200px; margin: 0 auto; text-align: center; padding: 120px 20px;">
+    <h1
+        style="font-size: 4.5rem; font-family: 'Outfit'; font-weight: 800; color: #0F0F0F; line-height: 1.1; margin-bottom: 24px;">
+        The Ultimate Cinema Platform.</h1>
+    <p
+        style="font-size: 1.5rem; color: #606060; margin-bottom: 48px; max-width: 800px; margin-left: auto; margin-right: auto;">
+        Witness the next generation of masters. Create, share, and discover cinematic vision in ultra-high definition.
+    </p>
 
-        <div style="display: flex; gap: 1.5rem; justify-content: center;">
-            <a href="{% url 'signup' %}" class="btn btn-primary"
-                style="padding: 1.25rem 3rem; font-size: 1.1rem; border-radius: 16px;">Get Started Now</a>
-            <a href="{% url 'login' %}" class="btn"
-                style="background: var(--glass); border: 1px solid var(--border); padding: 1.25rem 3rem; font-size: 1.1rem; border-radius: 16px;">Existing
-                Account</a>
+    <div style="display: flex; gap: 16px; justify-content: center; margin-bottom: 80px;">
+        <a href="{% url 'signup' %}" class="btn-elite"
+            style="background: #0F0F0F; color: #fff; padding: 12px 32px; border-radius: 40px; font-size: 1.1rem; border: none;">Get
+            Started Now</a>
+        <a href="{% url 'login' %}" class="btn-elite"
+            style="padding: 12px 32px; border-radius: 40px; font-size: 1.1rem;">Sign In</a>
+    </div>
+
+    <!-- Animated Showcase Feature -->
+    <div class="glass-showcase"
+        style="background: #F9F9F9; border: 1px solid #E5E5E5; border-radius: 40px; padding: 60px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; transform: scale(1.02);">
+        <div style="text-align: center;">
+            <div
+                style="width:64px; height:64px; background:#FFE6E6; border-radius:20px; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:#FF0000;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM8 15c0-1.66 1.34-3 3-3s3 1.34 3 3-1.34 3-3 3-3-1.34-3-3z" />
+                </svg>
+            </div>
+            <h3 style="font-size: 1.25rem; margin-bottom: 12px; font-weight: 600;">Crystal Clarity</h3>
+            <p style="font-size: 0.95rem; color: #606060;">High-bitrate 4K streaming that respects the director's
+                vision.</p>
         </div>
-
-        <div style="margin-top: 6rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
-            <div class="glass-card" style="padding: 1.5rem;">
-                <h3 style="color: var(--primary); margin-bottom: 10px;">4K Clarity</h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Crystal clear visual experience on every
-                    device.</p>
+        <div style="text-align: center;">
+            <div
+                style="width:64px; height:64px; background:#EBF5FF; border-radius:20px; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:#065FD4;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" />
+                </svg>
             </div>
-            <div class="glass-card" style="padding: 1.5rem;">
-                <h3 style="color: var(--secondary); margin-bottom: 10px;">Zero Lag</h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Optimized streaming engine for seamless
-                    witness.</p>
+            <h3 style="font-size: 1.25rem; margin-bottom: 12px; font-weight: 600;">Pro Creator Tools</h3>
+            <p style="font-size: 0.95rem; color: #606060;">Advanced analytics and powerful content management dashboard.
+            </p>
+        </div>
+        <div style="text-align: center;">
+            <div
+                style="width:64px; height:64px; background:#E6FFFA; border-radius:20px; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:#00BFA5;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+                </svg>
             </div>
-            <div class="glass-card" style="padding: 1.5rem;">
-                <h3 style="color: var(--success); margin-bottom: 10px;">Creator First</h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Built for masters who want to share their
-                    vision.</p>
-            </div>
+            <h3 style="font-size: 1.25rem; margin-bottom: 12px; font-weight: 600;">Global Presence</h3>
+            <p style="font-size: 0.95rem; color: #606060;">Reach audiences worldwide with optimized edge delivery.</p>
         </div>
     </div>
 </div>
@@ -46,21 +63,15 @@
     /* Full-screen background override for landing */
     .main-content {
         margin-left: 0 !important;
-        padding-top: 0 !important;
+        padding-top: 56px !important;
     }
 
     .sidebar {
         display: none !important;
     }
 
-    .top-header {
-        display: none !important;
-    }
-
     body {
-        background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent 40%),
-            radial-gradient(circle at bottom left, rgba(168, 85, 247, 0.15), transparent 40%),
-            var(--bg);
+        background: #fff !important;
     }
 </style>
 {% endblock %}

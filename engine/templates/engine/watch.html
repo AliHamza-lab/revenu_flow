@@ -1,107 +1,103 @@
 {% extends 'engine/base.html' %}
 
 {% block content %}
-<div class="animate-slide" style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start;">
-    <!-- Main Player Column -->
-    <section>
-        <div class="glass-card"
-            style="padding: 0; overflow: hidden; border-radius: 24px; background: #000; box-shadow: 0 12px 48px var(--primary-glow);">
-            <video controls preload="auto" poster="{{ video.thumbnail.url|default:'' }}"
-                style="width: 100%; height: auto; display: block; max-height: 80vh;">
+<div class="elite-fade-in"
+    style="max-width: 1700px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: 1fr 400px; gap: 24px;">
+    <!-- Primary Viewing Area -->
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; position: relative;">
+            <video controls
+                style="width:100%; height:100%; border-radius: 12px; box-shadow: 0 4px 32px rgba(0,0,0,0.15);"
+                poster="{{ video.thumbnail.url }}">
                 <source src="{{ video.video_file.url }}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
 
-        <header style="margin-top: 2rem;">
-            <h1 style="font-size: 2.25rem; font-weight: 800; font-family: 'Outfit'; margin-bottom: 0.75rem;">{{
-                video.title }}</h1>
-            <div
-                style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
-                <div style="display: flex; align-items: center; gap: 1rem;">
+        <div style="border-bottom: 1px solid var(--border); padding-bottom: 16px;">
+            <h1
+                style="font-size: 20px; font-weight: 700; color: #0F0F0F; margin-bottom: 12px; font-family: 'Roboto', sans-serif;">
+                {{ video.title }}</h1>
+
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 12px;">
                     <div
-                        style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(45deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; font-weight: 800;">
-                        {{ video.title|slice:":1"|upper }}
+                        style="width:40px; height:40px; border-radius:50%; background:#70B5F9; color:white; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size: 16px;">
+                        {{ video.uploader.username|first|upper|default:"V" }}
                     </div>
                     <div>
-                        <div style="font-weight: 700; color: #fff;">Internal Content</div>
-                        <div style="font-size: 0.85rem; color: var(--text-muted);">{{ video.views }} views • Verified
-                            Channel</div>
+                        <p style="font-weight: 600; font-size: 16px; color: #0F0F0F;">{{
+                            video.uploader.username|default:"Vortex Official" }}</p>
+                        <p style="font-size: 12px; color: #606060;">{{ video.uploader.uploaded_videos.count|default:"0"
+                            }} creations</p>
                     </div>
-                    <button class="btn"
-                        style="background: #fff; color: #000; padding: 0.5rem 1.25rem; border-radius: 20px; font-weight: 700;">Subscribe</button>
+                    <button class="btn-elite"
+                        style="background: #0F0F0F; color: #fff; margin-left: 24px; padding: 8px 16px; border-radius: 20px; border: none; font-weight: 600;">Follow</button>
                 </div>
-                <div style="display: flex; gap: 0.75rem;">
-                    <button class="btn btn-secondary" style="border-radius: 20px; font-size: 0.85rem;">
-                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
-                        </svg>
-                        1.4k
-                    </button>
-                    <button class="btn btn-secondary" style="border-radius: 20px; font-size: 0.85rem;">
-                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                        </svg>
-                        Share
-                    </button>
-                    <a href="{% url 'delete_video' video.id %}" class="btn"
-                        style="color: var(--error); border-radius: 20px;"
-                        onclick="return confirm('Release from the universe?')">
-                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
-                    </a>
-                </div>
-            </div>
 
-            <div class="glass-card" style="padding: 1.5rem; background: var(--glass-hover);">
-                <div style="font-weight: 700; margin-bottom: 0.5rem;">Description • {{ video.created_at|date:"M d, Y" }}
+                <div style="display: flex; gap: 8px;">
+                    <div
+                        style="background: var(--hover); display: flex; align-items: center; border-radius: 20px; overflow: hidden; border: 1px solid var(--border);">
+                        <button
+                            style="background:none; border:none; border-right: 1px solid var(--border); padding: 8px 16px; display:flex; align-items:center; gap:8px; cursor:pointer;"
+                            onmouseover="this.style.background='#E5E5E5';" onmouseout="this.style.background='none';">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <path
+                                    d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3" />
+                            </svg>
+                            <span style="font-weight:600; font-size:14px;">Masterpiece</span>
+                        </button>
+                    </div>
+                    <button class="btn-elite"
+                        style="background: var(--hover); border-radius: 20px; padding: 8px 16px; border: 1px solid var(--border); font-weight: 600;">Share</button>
+                    {% if user.is_authenticated and video.uploader == user or user.is_superuser %}
+                    <a href="{% url 'delete_video' video.id %}" class="btn-elite"
+                        style="background: #FFF0F0; border-radius: 20px; padding: 8px 16px; border: 1px solid #FFEBEB; color: #CC0000; font-weight: 600;"
+                        onclick="return confirm('Are you sure you want to remove this cinematic masterpiece?');">Dismiss</a>
+                    {% endif %}
                 </div>
-                <p style="color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">
-                    {{ video.description|default:"No description provided for this cosmic event." }}
-                </p>
-                <div
-                    style="margin-top: 1.5rem; color: var(--primary); font-weight: 700; cursor: pointer; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">
-                    Show more</div>
-            </div>
-        </header>
-    </section>
-
-    <!-- Sidebar Column -->
-    <aside style="display: flex; flex-direction: column; gap: 1.5rem;">
-        <h3 style="font-size: 1.1rem; font-weight: 700; padding: 0.5rem 0;">Discover More</h3>
-
-        {% for rel in related %}
-        <div style="display: flex; gap: 1rem; cursor: pointer; background: transparent; padding: 0.5rem; border-radius: 12px; transition: background 0.2s;"
-            onmouseover="this.style.background='var(--glass)'" onmouseout="this.style.background='transparent'"
-            onclick="window.location='{% url 'watch' rel.id %}'">
-            <div
-                style="width: 160px; height: 90px; border-radius: 12px; background: #000; overflow: hidden; flex-shrink: 0;">
-                {% if rel.thumbnail %}
-                <img src="{{ rel.thumbnail.url }}" style="width: 100%; height: 100%; object-fit: cover;">
-                {% else %}
-                <div
-                    style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--surface);">
-                    <svg width="20" height="20" fill="var(--border)" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z" />
-                    </svg>
-                </div>
-                {% endif %}
-            </div>
-            <div style="flex: 1;">
-                <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; line-height: 1.3;">{{ rel.title }}
-                </h4>
-                <p style="font-size: 0.8rem; color: var(--text-muted);">{{ rel.views }} views</p>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">{{ rel.created_at|timesince }}
-                    ago</p>
             </div>
         </div>
+
+        <div style="background: var(--surface); border-radius: 12px; padding: 12px; font-size: 14px; color: #0F0F0F;">
+            <p style="font-weight: 700; margin-bottom: 8px;">{{ video.views }} views • {{ video.created_at|date:"M d, Y"
+                }}</p>
+            <p style="white-space: pre-line; line-height: 1.5; color: #0F0F0F;">{{ video.description|default:"No
+                description provided for this visionary release." }}</p>
+        </div>
+    </div>
+
+    <!-- Related Cinematic Visions -->
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+        <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Next in Cycle</h3>
+        {% for rel in related %}
+        <a href="{% url 'watch' rel.id %}"
+            style="text-decoration: none; color: inherit; display: grid; grid-template-columns: 168px 1fr; gap: 12px;"
+            class="elite-fade-in">
+            <div style="aspect-ratio: 16/9; background: var(--surface); border-radius: 8px; overflow: hidden;">
+                {% if rel.thumbnail %}
+                <img src="{{ rel.thumbnail.url }}" style="width:100%; height:100%; object-fit: cover;">
+                {% else %}
+                <div
+                    style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#909090; font-size: 12px;">
+                    No Preview</div>
+                {% endif %}
+            </div>
+            <div>
+                <h4
+                    style="font-size: 14px; font-weight: 600; line-height: 1.4; color: #0F0F0F; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                    {{ rel.title }}</h4>
+                <p style="font-size: 12px; color: #606060; margin-bottom: 2px;">{{ rel.uploader.username|default:"Vortex
+                    Official" }}</p>
+                <p style="font-size: 12px; color: #606060;">{{ rel.views }} views • {{ rel.created_at|timesince }} ago
+                </p>
+            </div>
+        </a>
         {% empty %}
-        <p style="color: var(--text-muted);">No cosmic neighbors found.</p>
+        <p style="font-size: 13px; color: #606060; text-align: center;">Pulse into other cinematic journeys once more.
+        </p>
         {% endfor %}
-    </aside>
+    </div>
 </div>
 {% endblock %}
