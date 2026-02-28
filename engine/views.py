@@ -79,6 +79,17 @@ def upload_video(request):
     return render(request, 'engine/upload.html', {'categories': categories})
 
 @login_required
+def category_videos(request, category_slug):
+    category = get_object_or_404(Category, slug=category_slug)
+    videos = category.videos.all().order_by('-created_at')
+    categories = Category.objects.all()
+    return render(request, 'engine/home.html', {
+        'videos': videos,
+        'categories': categories,
+        'category_name': category.name
+    })
+
+@login_required
 def delete_video(request, video_id):
     video = get_object_or_404(Video, id=video_id)
     # Ensure ONLY the uploader or a superuser can delete
