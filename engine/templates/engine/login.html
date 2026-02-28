@@ -1,0 +1,59 @@
+{% extends 'engine/base.html' %}
+
+{% block content %}
+<div class="animate-slide"
+    style="min-height: 80vh; display: flex; align-items: center; justify-content: center; padding: 2rem;">
+    <div class="glass-card" style="width: 100%; max-width: 480px; padding: 3rem; text-align: center;">
+        <h2 style="font-size: 2.25rem; font-family: 'Outfit'; font-weight: 800; margin-bottom: 0.75rem;">Access Horizon
+        </h2>
+        <p style="color: var(--text-muted); margin-bottom: 2.5rem;">Secure into your cinematic portal.</p>
+
+        <form method="post" action="{% url 'login' %}"
+            style="display: flex; flex-direction: column; gap: 1.5rem; text-align: left;">
+            {% csrf_token %}
+
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <label
+                    style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 1.5px;">Identity</label>
+                <input type="text" name="username" placeholder="Username"
+                    style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; color: #fff; outline: none; transition: all 0.3s;"
+                    onfocus="this.style.borderColor='var(--primary)'; this.style.boxShadow='0 0 15px var(--primary-glow)';"
+                    onblur="this.style.borderColor='var(--border)'; this.style.boxShadow='none';" required>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <label
+                    style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 1.5px;">Credential</label>
+                <input type="password" name="password" placeholder="Passcode"
+                    style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; color: #fff; outline: none; transition: all 0.3s;"
+                    onfocus="this.style.borderColor='var(--primary)'; this.style.boxShadow='0 0 15px var(--primary-glow)';"
+                    onblur="this.style.borderColor='var(--border)'; this.style.boxShadow='none';" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary"
+                style="margin-top: 1rem; padding: 1rem 2rem; font-size: 1.1rem; border-radius: 14px; font-weight: 800;">Initiate
+                Access</button>
+        </form>
+
+        <p style="margin-top: 2rem; font-size: 0.9rem; color: var(--text-muted);">
+            New witness? <a href="{% url 'signup' %}"
+                style="color: var(--primary); font-weight: 700; text-decoration: none;">Create Identity</a>
+        </p>
+    </div>
+</div>
+<style>
+    /* Full-screen background override for login */
+    .main-content {
+        margin-left: 0 !important;
+        padding: 0 !important;
+    }
+
+    .sidebar {
+        display: none !important;
+    }
+
+    .top-header {
+        display: none !important;
+    }
+</style>
+{% endblock %}

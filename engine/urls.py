@@ -8,4 +8,7 @@ urlpatterns = [
     path('upload/', views.upload_video, name='upload_video'),
     path('category/<slug:category_slug>/', views.category_videos, name='category_videos'),
     path('delete-video/<int:video_id>/', views.delete_video, name='delete_video'),
+    path('login/', views.login_view, name='login'),
+    path('signup/', views.signup_view, name='signup'),
+    path('logout/', views.logout_view, name='logout'),
 ]
