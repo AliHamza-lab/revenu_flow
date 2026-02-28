@@ -1,0 +1,10 @@
+# Production Dependencies
+django>=5.0
+pandas
+openpyxl
+gunicorn
+whitenoise
+python-dotenv
+# Add any other libraries identified during research
+# numpy (often a dependency of pandas anyway)
+# openpyxl is needed for .xlsx support in audit_logic.py

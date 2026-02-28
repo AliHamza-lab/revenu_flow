@@ -6,3 +6,6 @@ __pycache__/
 media/
 .DS_Store
 *.log
+.env
+staticfiles/
+test_data*.csv
