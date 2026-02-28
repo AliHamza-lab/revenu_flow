@@ -1,76 +1,134 @@
 {% extends 'engine/base.html' %}
 
 {% block content %}
-<div class="elite-fade-in" style="max-width: 1400px; margin: 0 auto; padding: 24px;">
-    <!-- Category Pills Navigation -->
+<div class="elite-fade-in" style="max-width: 1600px; margin: 0 auto; padding: 40px;">
+    <!-- Featured Hero Section (Optional, if you have a featured video) -->
     <div
-        style="display: flex; gap: 12px; margin-bottom: 32px; overflow-x: auto; padding-bottom: 8px; border-bottom: 1px solid var(--border);">
-        <a href="{% url 'home' %}" class="btn-elite"
-            style="background: #0F0F0F; color: #fff; padding: 6px 16px; border-radius: 8px; font-weight: 500; border: none;">All</a>
+        style="margin-bottom: 48px; position: relative; border-radius: 32px; overflow: hidden; aspect-ratio: 21 / 7; background: linear-gradient(90deg, #141414 0%, rgba(20,20,20,0) 100%);">
+        <div
+            style="position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=2059&auto=format&fit=crop') center/cover no-repeat; opacity: 0.4; mix-blend-mode: overlay;">
+        </div>
+        <div
+            style="position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 0 80px; max-width: 800px;">
+            <span
+                style="color: var(--primary); font-weight: 800; text-transform: uppercase; letter-spacing: 4px; font-size: 0.9rem; margin-bottom: 16px; display: block;">NEW
+                RELEASE</span>
+            <h1
+                style="font-size: 3.5rem; font-family: 'Outfit'; font-weight: 800; margin-bottom: 24px; line-height: 1.1;">
+                The Art of Cinematic Vision</h1>
+            <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 32px; line-height: 1.6;">Explore the
+                latest masterpiece from the Vortex community. Experience unparalleled quality and storytelling.</p>
+            <div style="display: flex; gap: 16px;">
+                <button class="btn-elite btn-primary" style="padding: 14px 32px; border: none; font-size: 1rem;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                    Watch Now
+                </button>
+                <button class="btn-elite"
+                    style="padding: 14px 32px; background: rgba(255,255,255,0.05); color: white;">More Info</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Navigation -->
+    <div
+        style="display: flex; gap: 12px; margin-bottom: 40px; overflow-x: auto; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+        <a href="{% url 'home' %}" class="btn-elite {% if not current_cat %}btn-primary{% endif %}"
+            style="padding: 10px 24px; border-radius: 12px; font-weight: 600; font-size: 14px;">All Visions</a>
         {% for cat in categories %}
         <a href="{% url 'category_videos' cat.slug %}" class="btn-elite"
-            style="padding: 6px 16px; border-radius: 8px; font-weight: 500; background: var(--hover); color: #0F0F0F; border: none; transition: background 0.2s;">{{
+            style="padding: 10px 24px; border-radius: 12px; font-weight: 600; font-size: 14px; background: rgba(255,255,255,0.03); color: var(--text-muted); border-color: var(--border);">{{
             cat.name }}</a>
         {% endfor %}
     </div>
 
     <!-- Cinematic Mosaic -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px 16px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 48px 24px;">
         {% for video in videos %}
-        <div class="mosaic-item elite-fade-in"
-            style="display: flex; flex-direction: column; gap: 12px; cursor: pointer;">
-            <a href="{% url 'watch' video.id %}" style="text-decoration: none; color: inherit;">
-                <div style="aspect-ratio: 16 / 9; background: var(--surface); border-radius: 12px; overflow: hidden; position: relative; transition: border-radius 0.3s;"
-                    onmouseover="this.style.borderRadius='0';" onmouseout="this.style.borderRadius='12px';">
+        <div class="mosaic-item elite-fade-in" style="transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);">
+            <a href="{% url 'watch' video.id %}" style="text-decoration: none; color: inherit; display: block;">
+                <div class="video-card-wrapper"
+                    style="aspect-ratio: 16 / 9; background: var(--surface); border-radius: 20px; overflow: hidden; position: relative; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
                     {% if video.thumbnail %}
-                    <img src="{{ video.thumbnail.url }}" style="width:100%; height:100%; object-fit: cover;">
+                    <img src="{{ video.thumbnail.url }}"
+                        style="width:100%; height:100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);">
                     {% else %}
                     <div
-                        style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color: var(--text-muted); font-size: 13px; font-weight: 500;">
-                        No Thumbnail</div>
+                        style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color: var(--text-muted); font-size: 13px; font-weight: 600; background: linear-gradient(45deg, #1A1A1A, #2A2A2A);">
+                        NO PREVIEW AVAILABLE
+                    </div>
                     {% endif %}
+
                     <div
-                        style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.8); color: white; padding: 2px 4px; border-radius: 4px; font-size: 12px; font-weight: 500;">
-                        {{ video.duration|default:"0:00" }}</div>
+                        style="position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); color: white; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; border: 1px solid rgba(255,255,255,0.1);">
+                        {{ video.duration|default:"0:00" }}
+                    </div>
+
+                    <div class="play-overlay"
+                        style="position: absolute; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;">
+                        <div
+                            style="width: 64px; height: 64px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 0 20px var(--primary-glow);">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </div>
+                    </div>
                 </div>
 
-                <div style="display: flex; gap: 12px; margin-top: 4px;">
+                <div style="display: flex; gap: 16px; margin-top: 16px; padding: 0 4px;">
                     <div
-                        style="width:36px; height:36px; border-radius:50%; background:#70B5F9; color:white; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size: 14px;">
+                        style="width:44px; height:44px; border-radius:14px; background: var(--surface-hover); border: 1px solid var(--border); color: var(--primary); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-weight:800; font-size: 16px; font-family: 'Outfit';">
                         {{ video.uploader.username|first|upper|default:"V" }}
                     </div>
                     <div style="flex:1;">
                         <h3
-                            style="font-size: 16px; font-weight: 600; line-height: 1.4; color: #0F0F0F; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                            {{ video.title }}</h3>
-                        <p style="font-size: 14px; color: #606060; margin-bottom: 2px;">{{
-                            video.uploader.username|default:"Vortex Official" }}</p>
-                        <p style="font-size: 14px; color: #606060;">{{ video.views }} views • {{
-                            video.created_at|timesince }} ago</p>
+                            style="font-size: 17px; font-weight: 700; line-height: 1.3; color: white; margin-bottom: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-family: 'Outfit';">
+                            {{ video.title }}
+                        </h3>
+                        <p style="font-size: 14px; color: var(--text-muted); font-weight: 500;">
+                            {{ video.uploader.username|default:"Vortex Official" }}
+                        </p>
+                        <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">
+                            {{ video.views }} views • {{ video.created_at|timesince }} ago
+                        </p>
                     </div>
                 </div>
             </a>
         </div>
         {% empty %}
-        <div style="grid-column: 1 / -1; text-align: center; padding: 120px 0;">
-            <h2 style="color: #606060; font-family: 'Outfit'; font-weight: 600;">No cinematic visions found.</h2>
-            <p style="color: #909090; margin-top: 10px;">Be the first to release a masterpiece.</p>
+        <div
+            style="grid-column: 1 / -1; text-align: center; padding: 160px 0; background: var(--surface); border-radius: 40px; border: 1px dashed var(--border);">
+            <div style="color: var(--primary); margin-bottom: 24px;">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M15 10l5 5-5 5M4 4v7a4 4 0 004 4h12" />
+                </svg>
+            </div>
+            <h2 style="color: white; font-family: 'Outfit'; font-weight: 700; font-size: 2rem;">No cinematic visions
+                found.</h2>
+            <p style="color: var(--text-muted); margin-top: 12px; font-size: 1.1rem;">Be the first to release a
+                masterpiece in this category.</p>
         </div>
         {% endfor %}
     </div>
 </div>
 
 <style>
-    .mosaic-item:hover h3 {
-        color: #065FD4;
+    .mosaic-item:hover {
+        transform: translateY(-8px);
+    }
+
+    .mosaic-item:hover .video-card-wrapper {
+        border-color: var(--primary);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
     }
 
     .mosaic-item:hover img {
-        transform: scale(1.02);
+        transform: scale(1.1);
     }
 
-    img {
-        transition: transform 0.3s;
+    .mosaic-item:hover .play-overlay {
+        opacity: 1;
     }
 </style>
 {% endblock %}

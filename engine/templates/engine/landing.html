@@ -1,77 +1,131 @@
 {% extends 'engine/base.html' %}
 
 {% block content %}
-<div class="elite-fade-in" style="max-width: 1200px; margin: 0 auto; text-align: center; padding: 120px 20px;">
-    <h1
-        style="font-size: 4.5rem; font-family: 'Outfit'; font-weight: 800; color: #0F0F0F; line-height: 1.1; margin-bottom: 24px;">
-        The Ultimate Cinema Platform.</h1>
-    <p
-        style="font-size: 1.5rem; color: #606060; margin-bottom: 48px; max-width: 800px; margin-left: auto; margin-right: auto;">
-        Witness the next generation of masters. Create, share, and discover cinematic vision in ultra-high definition.
-    </p>
-
-    <div style="display: flex; gap: 16px; justify-content: center; margin-bottom: 80px;">
-        <a href="{% url 'signup' %}" class="btn-elite"
-            style="background: #0F0F0F; color: #fff; padding: 12px 32px; border-radius: 40px; font-size: 1.1rem; border: none;">Get
-            Started Now</a>
-        <a href="{% url 'login' %}" class="btn-elite"
-            style="padding: 12px 32px; border-radius: 40px; font-size: 1.1rem;">Sign In</a>
+<div class="elite-fade-in" style="max-width: 1400px; margin: 0 auto; text-align: center; padding: 160px 20px 100px;">
+    <div style="margin-bottom: 24px;">
+        <span
+            style="background: rgba(255, 0, 0, 0.1); color: var(--primary); padding: 8px 20px; border-radius: 40px; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; border: 1px solid rgba(255, 0, 0, 0.2);">Next-Gen
+            Cinema</span>
     </div>
 
-    <!-- Animated Showcase Feature -->
-    <div class="glass-showcase"
-        style="background: #F9F9F9; border: 1px solid #E5E5E5; border-radius: 40px; padding: 60px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; transform: scale(1.02);">
-        <div style="text-align: center;">
+    <h1
+        style="font-size: 5.5rem; font-family: 'Outfit'; font-weight: 800; color: #FFFFFF; line-height: 1.1; margin-bottom: 32px; letter-spacing: -2px;">
+        Experience <span id="typewriter"
+            style="color: var(--primary); border-right: 4px solid var(--primary); padding-right: 10px;"></span>
+    </h1>
+
+    <p
+        style="font-size: 1.6rem; color: var(--text-muted); margin-bottom: 56px; max-width: 850px; margin-left: auto; margin-right: auto; line-height: 1.6; font-weight: 400;">
+        Vortex Stream is the world's most advanced platform for cinematic storytelling. Built for creators who demand
+        perfection and viewers who seek the extraordinary.
+    </p>
+
+    <div style="display: flex; gap: 20px; justify-content: center; margin-bottom: 100px;">
+        <a href="{% url 'signup' %}" class="btn-elite btn-primary"
+            style="padding: 18px 48px; font-size: 1.2rem; border: none;">
+            Start Your Journey
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+        </a>
+        <a href="{% url 'login' %}" class="btn-elite"
+            style="padding: 18px 48px; font-size: 1.2rem; background: rgba(255,255,255,0.05);">
+            Explore Gallery
+        </a>
+    </div>
+
+    <!-- Feature Grid -->
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 80px;">
+        <div class="feature-card"
+            style="background: var(--surface); border: 1px solid var(--border); border-radius: 32px; padding: 48px; text-align: left; transition: all 0.4s ease;">
             <div
-                style="width:64px; height:64px; background:#FFE6E6; border-radius:20px; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:#FF0000;">
+                style="width: 56px; height: 56px; background: rgba(255,0,0,0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: var(--primary); margin-bottom: 24px;">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                     <path
                         d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM8 15c0-1.66 1.34-3 3-3s3 1.34 3 3-1.34 3-3 3-3-1.34-3-3z" />
                 </svg>
             </div>
-            <h3 style="font-size: 1.25rem; margin-bottom: 12px; font-weight: 600;">Crystal Clarity</h3>
-            <p style="font-size: 0.95rem; color: #606060;">High-bitrate 4K streaming that respects the director's
-                vision.</p>
+            <h3 style="font-size: 1.5rem; margin-bottom: 16px; font-weight: 700;">8K Pro Pipeline</h3>
+            <p style="color: var(--text-muted); line-height: 1.6;">Our proprietary encoding ensures every pixel is
+                preserved. Stream in uncompromising 8K HDR with zero latency.</p>
         </div>
-        <div style="text-align: center;">
+
+        <div class="feature-card"
+            style="background: var(--surface); border: 1px solid var(--border); border-radius: 32px; padding: 48px; text-align: left; transition: all 0.4s ease;">
             <div
-                style="width:64px; height:64px; background:#EBF5FF; border-radius:20px; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:#065FD4;">
+                style="width: 56px; height: 56px; background: rgba(62, 166, 255, 0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: var(--accent); margin-bottom: 24px;">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                     <path
                         d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" />
                 </svg>
             </div>
-            <h3 style="font-size: 1.25rem; margin-bottom: 12px; font-weight: 600;">Pro Creator Tools</h3>
-            <p style="font-size: 0.95rem; color: #606060;">Advanced analytics and powerful content management dashboard.
-            </p>
+            <h3 style="font-size: 1.5rem; margin-bottom: 16px; font-weight: 700;">Creator Studio</h3>
+            <p style="color: var(--text-muted); line-height: 1.6;">Advanced tools for the modern master. Real-time
+                engagement heatmaps and automated audience insight reporting.</p>
         </div>
-        <div style="text-align: center;">
+
+        <div class="feature-card"
+            style="background: var(--surface); border: 1px solid var(--border); border-radius: 32px; padding: 48px; text-align: left; transition: all 0.4s ease;">
             <div
-                style="width:64px; height:64px; background:#E6FFFA; border-radius:20px; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:#00BFA5;">
+                style="width: 56px; height: 56px; background: rgba(0, 191, 165, 0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: #00BFA5; margin-bottom: 24px;">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                     <path
                         d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
                 </svg>
             </div>
-            <h3 style="font-size: 1.25rem; margin-bottom: 12px; font-weight: 600;">Global Presence</h3>
-            <p style="font-size: 0.95rem; color: #606060;">Reach audiences worldwide with optimized edge delivery.</p>
+            <h3 style="font-size: 1.5rem; margin-bottom: 16px; font-weight: 700;">Elite Community</h3>
+            <p style="color: var(--text-muted); line-height: 1.6;">Join an exclusive network of high-caliber creators.
+                Collaborate on projects and reach a global audience instantly.</p>
         </div>
     </div>
 </div>
 
+<script>
+    const textElement = document.getElementById('typewriter');
+    const texts = ['Cinematic Masters.', 'Unrivaled Quality.', 'The Future of Film.', 'Your Vision.'];
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function type() {
+        const currentText = texts[textIndex];
+        if (isDeleting) {
+            textElement.textContent = currentText.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            textElement.textContent = currentText.substring(0, charIndex + 1);
+            charIndex++;
+        }
+
+        if (!isDeleting && charIndex === currentText.length) {
+            isDeleting = true;
+            setTimeout(type, 2000);
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            textIndex = (textIndex + 1) % texts.length;
+            setTimeout(type, 500);
+        } else {
+            setTimeout(type, isDeleting ? 50 : 100);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', type);
+</script>
+
 <style>
-    /* Full-screen background override for landing */
     .main-content {
         margin-left: 0 !important;
-        padding-top: 56px !important;
+        padding: 0 !important;
     }
 
     .sidebar {
         display: none !important;
     }
 
-    body {
-        background: #fff !important;
+    .feature-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--primary);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     }
 </style>
 {% endblock %}

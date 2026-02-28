@@ -31,7 +31,12 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '44.195.33.227,ec2-44-195-33-227.compute-1.amazonaws.com,localhost,127.0.0.1').split(',')
 
-CSRF_TRUSTED_ORIGINS = ['http://44.195.33.227', 'https://44.195.33.227']
+CSRF_TRUSTED_ORIGINS = [
+    'http://44.195.33.227',
+    'https://44.195.33.227',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -134,22 +139,19 @@ STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
-    "staticfiles": {
+        "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/6.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Production Security Settings
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    SECURE_SSL_REDIRECT = False # Set to True if you have SSL/HTTPS configured on EC2
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = False 
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
-    X_FRAME_OPTIONS = 'DENY'
+    X_FRAME_OPTIONS = 'SAMEORIGIN'
