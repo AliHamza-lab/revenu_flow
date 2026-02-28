@@ -94,3 +94,12 @@ def re_run_audit_view(request, session_id):
 def historical_view(request):
     sessions = AuditSession.objects.all().order_by('-created_at')
     return render(request, 'engine/historical.html', {'sessions': sessions})
+
+def delete_session_view(request, session_id):
+    session = get_object_or_404(AuditSession, id=session_id)
+    # Optional: Delete the actual file if it exists
+    fs = FileSystemStorage()
+    if fs.exists(session.file_name):
+        fs.delete(session.file_name)
+    session.delete()
+    return redirect('dashboard')
