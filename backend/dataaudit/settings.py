@@ -110,7 +110,10 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "http://44.195.33.227",
+    "http://44.195.33.227:8000",
 ]
+CORS_ALLOW_ALL_ORIGINS = DEBUG  # Allow all origins in dev mode
 
 
 # Password validation
@@ -152,9 +155,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, '..', 'frontend', 'dist', 'assets'),
-]
+
+# Only include frontend/dist/assets if it exists (avoids crash before first npm build)
+_FRONTEND_ASSETS = os.path.join(BASE_DIR, '..', 'frontend', 'dist', 'assets')
+STATICFILES_DIRS = [_FRONTEND_ASSETS] if os.path.isdir(_FRONTEND_ASSETS) else []
 
 # Media files (Videos, Thumbnails)
 MEDIA_URL = '/media/'
