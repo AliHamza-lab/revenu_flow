@@ -7,6 +7,7 @@ import SignupPage from './pages/SignupPage';
 import ResumesPage from './pages/ResumesPage';
 import LinkedInPage from './pages/LinkedInPage';
 import ApplicationsPage from './pages/ApplicationsPage';
+import SettingsPage from './pages/SettingsPage';
 import Sidebar from './components/Sidebar';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
@@ -125,6 +126,7 @@ function App() {
           <Route path="/resumes" element={<ProtectedRoute><ResumesPage /></ProtectedRoute>} />
           <Route path="/linkedin" element={<ProtectedRoute><LinkedInPage /></ProtectedRoute>} />
           <Route path="/applications" element={<ProtectedRoute><ApplicationsPage /></ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
 
           <Route path="/skill-matrix" element={<ProtectedRoute><SkillMatrix /></ProtectedRoute>} />
           <Route path="/interview-prep" element={<ProtectedRoute><InterviewPrep /></ProtectedRoute>} />
