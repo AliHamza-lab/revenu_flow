@@ -1,0 +1,103 @@
+{% extends 'engine/base.html' %}
+
+{% block content %}
+<div class="elite-fade-in"
+    style="max-width: 1700px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: 1fr 400px; gap: 24px;">
+    <!-- Primary Viewing Area -->
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; position: relative;">
+            <video controls
+                style="width:100%; height:100%; border-radius: 12px; box-shadow: 0 4px 32px rgba(0,0,0,0.15);"
+                poster="{{ video.thumbnail.url }}">
+                <source src="{{ video.video_file.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div style="border-bottom: 1px solid var(--border); padding-bottom: 16px;">
+            <h1
+                style="font-size: 20px; font-weight: 700; color: #0F0F0F; margin-bottom: 12px; font-family: 'Roboto', sans-serif;">
+                {{ video.title }}</h1>
+
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div
+                        style="width:40px; height:40px; border-radius:50%; background:#70B5F9; color:white; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size: 16px;">
+                        {{ video.uploader.username|first|upper|default:"V" }}
+                    </div>
+                    <div>
+                        <p style="font-weight: 600; font-size: 16px; color: #0F0F0F;">{{
+                            video.uploader.username|default:"Vortex Official" }}</p>
+                        <p style="font-size: 12px; color: #606060;">{{ video.uploader.uploaded_videos.count|default:"0"
+                            }} creations</p>
+                    </div>
+                    <button class="btn-elite"
+                        style="background: #0F0F0F; color: #fff; margin-left: 24px; padding: 8px 16px; border-radius: 20px; border: none; font-weight: 600;">Follow</button>
+                </div>
+
+                <div style="display: flex; gap: 8px;">
+                    <div
+                        style="background: var(--hover); display: flex; align-items: center; border-radius: 20px; overflow: hidden; border: 1px solid var(--border);">
+                        <button
+                            style="background:none; border:none; border-right: 1px solid var(--border); padding: 8px 16px; display:flex; align-items:center; gap:8px; cursor:pointer;"
+                            onmouseover="this.style.background='#E5E5E5';" onmouseout="this.style.background='none';">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <path
+                                    d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3" />
+                            </svg>
+                            <span style="font-weight:600; font-size:14px;">Masterpiece</span>
+                        </button>
+                    </div>
+                    <button class="btn-elite"
+                        style="background: var(--hover); border-radius: 20px; padding: 8px 16px; border: 1px solid var(--border); font-weight: 600;">Share</button>
+                    {% if user.is_authenticated and video.uploader == user or user.is_superuser %}
+                    <a href="{% url 'delete_video' video.id %}" class="btn-elite"
+                        style="background: #FFF0F0; border-radius: 20px; padding: 8px 16px; border: 1px solid #FFEBEB; color: #CC0000; font-weight: 600;"
+                        onclick="return confirm('Are you sure you want to remove this cinematic masterpiece?');">Dismiss</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div style="background: var(--surface); border-radius: 12px; padding: 12px; font-size: 14px; color: #0F0F0F;">
+            <p style="font-weight: 700; margin-bottom: 8px;">{{ video.views }} views • {{ video.created_at|date:"M d, Y"
+                }}</p>
+            <p style="white-space: pre-line; line-height: 1.5; color: #0F0F0F;">{{ video.description|default:"No
+                description provided for this visionary release." }}</p>
+        </div>
+    </div>
+
+    <!-- Related Cinematic Visions -->
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+        <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Next in Cycle</h3>
+        {% for rel in related %}
+        <a href="{% url 'watch' rel.id %}"
+            style="text-decoration: none; color: inherit; display: grid; grid-template-columns: 168px 1fr; gap: 12px;"
+            class="elite-fade-in">
+            <div style="aspect-ratio: 16/9; background: var(--surface); border-radius: 8px; overflow: hidden;">
+                {% if rel.thumbnail %}
+                <img src="{{ rel.thumbnail.url }}" style="width:100%; height:100%; object-fit: cover;">
+                {% else %}
+                <div
+                    style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#909090; font-size: 12px;">
+                    No Preview</div>
+                {% endif %}
+            </div>
+            <div>
+                <h4
+                    style="font-size: 14px; font-weight: 600; line-height: 1.4; color: #0F0F0F; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                    {{ rel.title }}</h4>
+                <p style="font-size: 12px; color: #606060; margin-bottom: 2px;">{{ rel.uploader.username|default:"Vortex
+                    Official" }}</p>
+                <p style="font-size: 12px; color: #606060;">{{ rel.views }} views • {{ rel.created_at|timesince }} ago
+                </p>
+            </div>
+        </a>
+        {% empty %}
+        <p style="font-size: 13px; color: #606060; text-align: center;">Pulse into other cinematic journeys once more.
+        </p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

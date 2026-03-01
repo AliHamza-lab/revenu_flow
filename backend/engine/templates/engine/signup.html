@@ -1,0 +1,75 @@
+{% extends 'engine/base.html' %}
+
+{% block content %}
+<div class="elite-fade-in"
+    style="min-height: 90vh; display: flex; align-items: center; justify-content: center; padding: 2rem;">
+    <div
+        style="width: 100%; max-width: 520px; padding: 64px; text-align: center; background: var(--surface); border: 1px solid var(--border); border-radius: 32px; box-shadow: 0 40px 100px rgba(0,0,0,0.5); position: relative; overflow: hidden;">
+        <!-- Animated Background Detail -->
+        <div
+            style="position: absolute; bottom: -100px; left: -100px; width: 200px; height: 200px; background: var(--accent); filter: blur(120px); opacity: 0.1;">
+        </div>
+
+        <div style="margin-bottom: 40px; display: flex; flex-direction: column; align-items: center; gap: 16px;">
+            <div class="logo-icon">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M10 15.065V8.935L15 12L10 15.065ZM12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" />
+                </svg>
+            </div>
+            <h2
+                style="font-size: 2.5rem; font-family: 'Outfit'; font-weight: 800; color: #FFFFFF; letter-spacing: -1px;">
+                Join the Elite</h2>
+            <p style="color: var(--text-muted); font-size: 1.1rem;">Create your cinematic identity today</p>
+        </div>
+
+        <form method="post" action="{% url 'signup' %}"
+            style="display: flex; flex-direction: column; gap: 24px; text-align: left;">
+            {% csrf_token %}
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <label style="font-size: 0.9rem; font-weight: 600; color: var(--text-muted); margin-left: 12px;">CHOOSE
+                    USERNAME</label>
+                <input type="text" name="username" placeholder="Define your brand"
+                    style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 16px; padding: 18px 24px; font-size: 1rem; color: white; outline: none; transition: all 0.3s ease;"
+                    onfocus="this.style.borderColor='var(--primary)'; this.style.background='rgba(255,255,255,0.05)';"
+                    onblur="this.style.borderColor='var(--border)'; this.style.background='rgba(255,255,255,0.03)';"
+                    required>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <label style="font-size: 0.9rem; font-weight: 600; color: var(--text-muted); margin-left: 12px;">SECURE
+                    PASSWORD</label>
+                <input type="password" name="password" placeholder="Create a strong key"
+                    style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 16px; padding: 18px 24px; font-size: 1rem; color: white; outline: none; transition: all 0.3s ease;"
+                    onfocus="this.style.borderColor='var(--primary)'; this.style.background='rgba(255,255,255,0.05)';"
+                    onblur="this.style.borderColor='var(--border)'; this.style.background='rgba(255,255,255,0.03)';"
+                    required>
+            </div>
+
+            <button type="submit" class="btn-elite btn-primary"
+                style="padding: 18px; border-radius: 16px; font-size: 1.1rem; width: 100%; border: none; margin-top: 12px;">
+                Join Now
+            </button>
+        </form>
+
+        <p style="margin-top: 48px; font-size: 1rem; color: var(--text-muted);">
+            Already a member?
+            <a href="{% url 'login' %}"
+                style="color: var(--primary); font-weight: 700; text-decoration: none; margin-left: 4px;">Sign In</a>
+        </p>
+    </div>
+</div>
+
+<style>
+    .main-content {
+        margin-left: 0 !important;
+        padding: 0 !important;
+    }
+
+    .sidebar,
+    .top-header {
+        display: none !important;
+    }
+</style>
+{% endblock %}
