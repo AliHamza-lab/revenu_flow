@@ -1,10 +1,12 @@
 
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Sidebar = () => {
     const { logout } = useAuth();
     const location = useLocation();
+    const [mobileOpen, setMobileOpen] = useState(false);
 
     const menuItems = [
         {
@@ -27,16 +29,16 @@ const Sidebar = () => {
         }
     ];
 
-    return (
-        <aside className="w-72 border-r border-white/5 bg-black p-6 flex flex-col gap-8 sticky top-0 h-screen overflow-y-auto custom-scrollbar">
-            <Link to="/" className="flex items-center gap-3 mb-4 group">
+    const SidebarContent = () => (
+        <>
+            <Link to="/" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 mb-4 group">
                 <div className="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center transition-all group-hover:scale-110 shadow-[0_0_20px_rgba(255,0,0,0.2)]">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z" /></svg>
                 </div>
                 <span className="text-2xl font-black tracking-tighter uppercase italic group-hover:text-red-500 transition-colors">Career OS</span>
             </Link>
 
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6 flex-1">
                 {menuItems.map((section, si) => (
                     <div key={si} className="flex flex-col gap-2">
                         <div className="text-[10px] font-black text-gray-500 tracking-[0.2em] uppercase px-4">{section.group}</div>
@@ -45,6 +47,7 @@ const Sidebar = () => {
                                 <Link
                                     key={i}
                                     to={item.path}
+                                    onClick={() => setMobileOpen(false)}
                                     className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl transition-all ${location.pathname === item.path ? 'bg-red-600 text-white font-black shadow-[0_0_20px_rgba(255,0,0,0.1)]' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
                                 >
                                     {item.icon}
@@ -66,7 +69,49 @@ const Sidebar = () => {
                     <span className="text-[11px] uppercase tracking-[0.15em]">Disconnect</span>
                 </button>
             </div>
-        </aside>
+        </>
+    );
+
+    return (
+        <>
+            {/* ── Desktop Sidebar ── */}
+            <aside className="hidden lg:flex w-72 border-r border-white/5 bg-black p-6 flex-col gap-8 sticky top-0 h-screen overflow-y-auto">
+                <SidebarContent />
+            </aside>
+
+            {/* ── Mobile Top Bar ── */}
+            <div className="lg:hidden fixed top-0 left-0 right-0 z-50 h-16 bg-black/95 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-4">
+                <Link to="/" className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(255,0,0,0.2)]">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z" /></svg>
+                    </div>
+                    <span className="text-lg font-black tracking-tighter uppercase italic">Career OS</span>
+                </Link>
+                <button
+                    onClick={() => setMobileOpen(!mobileOpen)}
+                    className="p-2 text-gray-400 hover:text-white transition-colors"
+                    aria-label="Toggle menu"
+                >
+                    {mobileOpen ? (
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                    ) : (
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M4 6h16" /><path d="M4 12h16" /><path d="M4 18h16" /></svg>
+                    )}
+                </button>
+            </div>
+
+            {/* ── Mobile Drawer ── */}
+            {mobileOpen && (
+                <div className="lg:hidden fixed inset-0 z-40 flex">
+                    {/* Backdrop */}
+                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
+                    {/* Drawer */}
+                    <aside className="relative w-72 max-w-[85vw] bg-black border-r border-white/5 p-6 flex flex-col gap-6 h-full overflow-y-auto z-50 pt-20">
+                        <SidebarContent />
+                    </aside>
+                </div>
+            )}
+        </>
     );
 };
 

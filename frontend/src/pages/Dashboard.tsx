@@ -95,10 +95,11 @@ const Dashboard = () => {
         <div className="min-h-screen bg-[#050505] text-white flex">
             <Sidebar />
 
-            {/* Main Content */}
-            <main className="flex-1 overflow-y-auto bg-[radial-gradient(circle_at_top_right,rgba(255,0,0,0.03)_0%,transparent_50%)]">
-                <header className="h-20 border-b border-white/5 px-8 flex items-center justify-between bg-black/50 backdrop-blur-xl sticky top-0 z-10">
-                    <div className="relative w-96">
+            {/* Main Content — offset by mobile top bar height on small screens */}
+            <main className="flex-1 overflow-y-auto bg-[radial-gradient(circle_at_top_right,rgba(255,0,0,0.03)_0%,transparent_50%)] pt-16 lg:pt-0 min-w-0">
+                {/* Desktop sticky header — hidden on mobile (mobile has its own top bar in Sidebar) */}
+                <header className="hidden lg:flex h-20 border-b border-white/5 px-8 items-center justify-between bg-black/50 backdrop-blur-xl sticky top-0 z-10">
+                    <div className="relative w-80 xl:w-96">
                         <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
                         <input
                             type="text"
@@ -106,7 +107,6 @@ const Dashboard = () => {
                             className="w-full bg-white/5 border border-white/10 rounded-full py-2.5 pl-12 pr-6 text-xs font-medium tracking-widest focus:outline-none focus:border-red-500/50 transition-all uppercase"
                         />
                     </div>
-
                     <div className="flex items-center gap-6">
                         <button className="relative text-gray-400 hover:text-white transition-all p-2 bg-white/5 rounded-lg border border-white/5">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" /><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" /></svg>
@@ -115,47 +115,48 @@ const Dashboard = () => {
                         <div className="flex items-center gap-3 pl-6 border-l border-white/10">
                             <div className="text-right">
                                 <div className="text-xs font-black uppercase tracking-widest text-white italic">{user?.username || 'Elite Operative'}</div>
-                                <div className="text-[10px] text-red-500 font-black uppercase tracking-widest text-right">ELITE OPERATIVE</div>
+                                <div className="text-[10px] text-red-500 font-black uppercase tracking-widest">ELITE OPERATIVE</div>
                             </div>
                             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-600 to-red-900 border border-white/20 shadow-[0_0_15px_rgba(255,0,0,0.2)]"></div>
                         </div>
                     </div>
                 </header>
 
-                <div className="p-8 max-w-7xl mx-auto flex flex-col gap-10">
+                <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto flex flex-col gap-6 lg:gap-10">
                     {/* Welcome Area */}
-                    <section className="flex items-end justify-between">
+                    <section className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                         <div className="flex flex-col gap-1">
                             <div className="flex items-center gap-2 text-red-500 text-[10px] font-black uppercase tracking-[0.3em] mb-1 text-left">
                                 <span className="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse"></span>
                                 {loading ? 'Loading...' : error ? 'Error' : 'System Authorized'}
                             </div>
-                            <h1 className="text-5xl font-black tracking-tighter mb-2 uppercase italic leading-none text-left">COMMAND CENTER</h1>
+                            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tighter mb-2 uppercase italic leading-none text-left">COMMAND CENTER</h1>
                             <p className="text-gray-500 text-xs font-bold tracking-[0.2em] uppercase text-left">
                                 {stats?.applicationCount
-                                    ? `${stats.applicationCount} Applications Tracked · ${stats.statusBreakdown?.INTERVIEWING || 0} Interviewing`
+                                    ? `${stats.applicationCount} Applications · ${stats.statusBreakdown?.INTERVIEWING || 0} Interviewing`
                                     : 'Target: Full-Stack Architect @ Silicon Valley'}
                             </p>
                         </div>
-                        <button className="px-8 py-4 bg-red-600 rounded-2xl flex items-center gap-3 font-black uppercase tracking-widest text-xs hover:bg-red-700 transition-all transform hover:scale-[1.05] shadow-[0_0_30px_rgba(255,0,0,0.2)]">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
-                            Execute New Application
+                        <button className="self-start sm:self-auto px-5 sm:px-8 py-3 sm:py-4 bg-red-600 rounded-2xl flex items-center gap-3 font-black uppercase tracking-widest text-xs hover:bg-red-700 transition-all transform hover:scale-[1.05] shadow-[0_0_30px_rgba(255,0,0,0.2)] whitespace-nowrap">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
+                            <span className="hidden sm:inline">Execute New Application</span>
+                            <span className="sm:hidden">New Application</span>
                         </button>
                     </section>
 
                     {/* Metrics Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
                         {[
                             { label: 'Intelligence Score', value: loading ? '...' : `${stats?.intelligenceScore ?? 0}`, unit: '/100', trend: stats?.intelligenceScore ? 'From Resume Analysis' : 'Upload a Resume', color: 'text-red-500' },
                             { label: 'Resumes Optimized', value: loading ? '...' : `${stats?.resumeCount ?? 0}`, unit: '', trend: stats?.topResumeScore ? `Top Score: ${stats.topResumeScore}` : 'No Resumes Yet', color: 'text-white' },
                             { label: 'Active Targets', value: loading ? '...' : `${stats?.applicationCount ?? 0}`, unit: '', trend: stats?.statusBreakdown ? `${stats.statusBreakdown.APPLIED} Applied` : 'High Priority', color: 'text-red-600' },
                             { label: 'Interview Queue', value: loading ? '...' : `${stats?.interviewCount ?? 0}`, unit: '', trend: stats?.successRate ? `${stats.successRate}% Success Rate` : 'Next: Pending', color: 'text-red-500' },
                         ].map((metric, i) => (
-                            <div key={i} className="group p-7 rounded-[32px] bg-white/[0.02] border border-white/5 hover:bg-white/[0.05] hover:border-red-500/20 transition-all text-left relative overflow-hidden">
+                            <div key={i} className="group p-4 sm:p-5 lg:p-7 rounded-[24px] lg:rounded-[32px] bg-white/[0.02] border border-white/5 hover:bg-white/[0.05] hover:border-red-500/20 transition-all text-left relative overflow-hidden">
                                 <div className="absolute top-0 right-0 w-24 h-24 bg-red-600/5 blur-[40px] rounded-full translate-x-12 -translate-y-12"></div>
-                                <div className="text-[10px] font-black text-gray-500 tracking-[0.25em] uppercase mb-5">{metric.label}</div>
-                                <div className={`text-4xl font-black italic mb-2 tracking-tighter ${metric.color}`}>
-                                    {metric.value}<span className="text-lg text-gray-600">{metric.unit}</span>
+                                <div className="text-[9px] sm:text-[10px] font-black text-gray-500 tracking-[0.2em] uppercase mb-3 sm:mb-5">{metric.label}</div>
+                                <div className={`text-2xl sm:text-3xl lg:text-4xl font-black italic mb-2 tracking-tighter ${metric.color}`}>
+                                    {metric.value}<span className="text-base sm:text-lg text-gray-600">{metric.unit}</span>
                                 </div>
                                 <div className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 group-hover:text-red-500 transition-colors">{metric.trend}</div>
                             </div>
@@ -196,10 +197,10 @@ const Dashboard = () => {
                         </div>
                     )}
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 text-left">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-10 text-left">
                         {/* Main Intelligence Feed */}
                         <div className="lg:col-span-2 flex flex-col gap-6">
-                            <div className="p-8 rounded-[40px] bg-white/[0.02] border border-white/5 backdrop-blur-sm">
+                            <div className="p-4 sm:p-6 lg:p-8 rounded-[28px] lg:rounded-[40px] bg-white/[0.02] border border-white/5 backdrop-blur-sm">
                                 <div className="flex items-center justify-between mb-8 pb-5 border-b border-white/5">
                                     <h3 className="text-xl font-black tracking-tight uppercase italic text-left">Operational Targets</h3>
                                     <button className="text-[10px] font-black text-red-500 uppercase tracking-widest hover:underline">View All Intelligence</button>
@@ -215,26 +216,26 @@ const Dashboard = () => {
                                             <p className="text-[9px] text-gray-700 mt-2 uppercase tracking-widest">Add your first job application to begin tracking</p>
                                         </div>
                                     ) : stats.recentApplications.map((app) => (
-                                        <div key={app.id} className="group flex items-center justify-between p-5 rounded-3xl hover:bg-white/5 transition-all border border-transparent hover:border-white/10">
-                                            <div className="flex items-center gap-5">
-                                                <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center font-black text-2xl italic group-hover:border-red-500/30 transition-all text-red-600">
+                                        <div key={app.id} className="group flex items-center justify-between p-3 sm:p-5 rounded-2xl sm:rounded-3xl hover:bg-white/5 transition-all border border-transparent hover:border-white/10">
+                                            <div className="flex items-center gap-3 sm:gap-5 min-w-0">
+                                                <div className="w-10 h-10 sm:w-14 sm:h-14 shrink-0 rounded-xl sm:rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center font-black text-lg sm:text-2xl italic group-hover:border-red-500/30 transition-all text-red-600">
                                                     {app.company[0].toUpperCase()}
                                                 </div>
-                                                <div className="text-left">
-                                                    <div className="font-black uppercase tracking-widest text-sm mb-0.5">{app.company}</div>
-                                                    <div className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">{app.job_title}</div>
+                                                <div className="text-left min-w-0">
+                                                    <div className="font-black uppercase tracking-widest text-xs sm:text-sm mb-0.5 truncate">{app.company}</div>
+                                                    <div className="text-[9px] sm:text-[10px] text-gray-500 font-bold uppercase tracking-widest truncate">{app.job_title}</div>
                                                 </div>
                                             </div>
-                                            <div className="flex items-center gap-10">
-                                                <div className="text-right hidden sm:block">
+                                            <div className="flex items-center gap-3 sm:gap-6 shrink-0">
+                                                <div className="text-right hidden md:block">
                                                     <div className="text-[9px] font-black text-red-500 tracking-[0.2em] mb-1">SCORE</div>
-                                                    <div className="font-black italic text-lg">{app.match_score || '—'}</div>
+                                                    <div className="font-black italic text-base sm:text-lg">{app.match_score || '—'}</div>
                                                 </div>
                                                 <div className="text-right">
-                                                    <div className={`px-4 py-1.5 rounded-full text-[9px] font-black tracking-widest border ${STATUS_STYLE[app.status] || 'bg-white/5 border-white/10 text-gray-400'}`}>
+                                                    <div className={`px-2 sm:px-4 py-1 sm:py-1.5 rounded-full text-[8px] sm:text-[9px] font-black tracking-widest border ${STATUS_STYLE[app.status] || 'bg-white/5 border-white/10 text-gray-400'}`}>
                                                         {app.status}
                                                     </div>
-                                                    <div className="text-[8px] text-gray-600 font-bold mt-2 tracking-widest">
+                                                    <div className="text-[8px] text-gray-600 font-bold mt-1.5 tracking-widest hidden sm:block">
                                                         {app.applied_at || new Date(app.created_at).toLocaleDateString()}
                                                     </div>
                                                 </div>
@@ -247,7 +248,7 @@ const Dashboard = () => {
 
                         {/* AI Advisor Panel */}
                         <div className="flex flex-col gap-8">
-                            <div className="p-8 rounded-[40px] bg-red-600/5 border border-red-600/20 relative overflow-hidden group hover:bg-red-600/10 transition-all">
+                            <div className="p-5 sm:p-8 rounded-[28px] lg:rounded-[40px] bg-red-600/5 border border-red-600/20 relative overflow-hidden group hover:bg-red-600/10 transition-all">
                                 <div className="absolute top-0 right-0 w-32 h-32 bg-red-600/10 blur-[50px] rounded-full translate-x-16 -translate-y-16"></div>
                                 <div className="flex items-center gap-3 mb-8">
                                     <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(255,0,0,0.3)]">
@@ -264,7 +265,7 @@ const Dashboard = () => {
                             </div>
 
                             {/* Market Velocity — driven by real weeklyActivity data */}
-                            <div className="p-8 rounded-[40px] bg-white/[0.02] border border-white/5 text-left h-full">
+                            <div className="p-5 sm:p-8 rounded-[28px] lg:rounded-[40px] bg-white/[0.02] border border-white/5 text-left">
                                 <div className="flex items-center justify-between mb-8">
                                     <h3 className="text-[10px] font-black tracking-[0.3em] uppercase text-gray-500">Weekly Activity</h3>
                                     <span className="text-[10px] font-black text-red-500 uppercase tracking-widest">
