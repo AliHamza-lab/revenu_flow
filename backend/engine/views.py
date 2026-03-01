@@ -1,23 +1,29 @@
+import os
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 from .models import Video, Category
 from django.db.models import Q
-
 from django.contrib import messages
 
+
 def home(request):
-    return render(request, 'index.html')
-        
-    videos = Video.objects.all().order_by('-created_at')
-    categories = Category.objects.all()
-    trending = Video.objects.all().order_by('-views')[:5]
-    return render(request, 'engine/home.html', {
-        'videos': videos,
-        'categories': categories,
-        'trending': trending
+    """Serve React SPA. Falls back to API status if frontend is not built yet."""
+    index_path = os.path.join(settings.BASE_DIR, '..', 'frontend', 'dist', 'index.html')
+    if os.path.exists(index_path):
+        return render(request, 'index.html')
+    # Frontend not built yet — return helpful API status instead of 500
+    from django.http import JsonResponse
+    return JsonResponse({
+        'status': 'Django API is running ✓',
+        'version': '1.0.0',
+        'message': 'Frontend not built yet. Run: cd frontend && npm run build',
+        'api_docs': '/api/v1/',
+        'admin': '/admin/',
     })
+
 
 def login_view(request):
     if request.method == 'POST':
