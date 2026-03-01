@@ -1,0 +1,17 @@
+[Unit]
+Description=Gunicorn daemon for RevenuFlow Django App
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/djangoapp/backend
+Environment="PATH=/home/ubuntu/djangoapp/venv/bin"
+ExecStart=/home/ubuntu/djangoapp/venv/bin/gunicorn \
+    --config /home/ubuntu/djangoapp/backend/gunicorn_config.py \
+    dataaudit.wsgi:application
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
